@@ -3,181 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryphera OS | Global Management</title>
+    <title>Ryphera OS | Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap');
-        body { background-color: #080808; color: #ffffff; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; } 
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .gradient-text { background: linear-gradient(135deg, #fff 0%, #333 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* INTRO */
-        #pre-intro { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; animation: fadeOut 0.8s ease 3s forwards; }
-        .snake { position: absolute; background: linear-gradient(90deg, transparent, #fff, transparent); height: 2px; width: 200px; filter: blur(2px); opacity: 0; }
-        .snake-1 { top: 30%; animation: slither 2s ease-in-out 0.2s forwards; }
-        @keyframes slither { 0% { transform: translateX(-200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(120vw); opacity: 0; } }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        body { background-color: #0a0a0a; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; padding: 0; } 
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* DİL SEÇİM EKRANI */
-        #lang-overlay { position: fixed; inset: 0; background: #080808; z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
+        /* O İLK BASTAKİ EFSANE INTRO */
+        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; animation: preIntroFadeOut 0.8s ease-in-out 3.5s forwards; }
+        .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+        .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 3px; width: 200px; border-radius: 50%; filter: blur(2px); opacity: 0; }
+        .snake-1 { top: 20%; animation: slitherRight 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
+        .snake-2 { top: 50%; right: 0; width: 250px; animation: slitherLeft 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards; }
+        .snake-3 { bottom: 20%; left: -100px; transform: rotate(-20deg); animation: slitherDiagonal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards; }
+        #pre-intro-text { font-size: 5rem; font-weight: 900; letter-spacing: 1.5rem; color: #ffffff; text-transform: uppercase; z-index: 2; text-shadow: 0 0 30px rgba(255, 255, 255, 0.4); animation: textReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards; transform: scale(0.8); opacity: 0; filter: blur(10px); }
         
-        #main-content { opacity: 0; transition: opacity 1s ease; min-height: 100vh; display: flex; flex-direction: column; }
-        .page-view { display: none; opacity: 0; transform: translateY(10px); transition: 0.4s ease; flex-grow: 1; }
+        @keyframes slitherRight { 0% { transform: translateX(-200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(120vw); opacity: 0; } }
+        @keyframes slitherLeft { 0% { transform: translateX(200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(-120vw); opacity: 0; } }
+        @keyframes slitherDiagonal { 0% { transform: translate(-200px, 100px) rotate(-20deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(120vw, -300px) rotate(-20deg); opacity: 0; } }
+        @keyframes textReveal { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0px); } }
+        @keyframes preIntroFadeOut { 0% { transform: translateY(0%); opacity: 1; } 100% { transform: translateY(-100%); opacity: 0; visibility: hidden; } }
+
+        #main-content { opacity: 0; transition: opacity 1s ease-in; display: flex; flex-direction: column; min-height: 100vh; }
+        .page-view { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease-out; flex-grow: 1; }
         .page-view.active { display: block; opacity: 1; transform: translateY(0); }
         
-        .nav-link { color: #666; transition: 0.3s; font-size: 11px; letter-spacing: 2px; }
-        .nav-link:hover, .nav-link.active-nav { color: #fff; }
-        input, textarea, select { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; border-radius: 10px; padding: 12px; outline: none; }
+        /* BÜYÜTÜLMÜŞ INPUT VE FORMLAR */
+        input, textarea { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 0.75rem; padding: 1.25rem; width: 100%; outline: none; font-size: 1.1rem; transition: border 0.3s; }
+        input:focus, textarea:focus { border-color: #5865F2; background: rgba(255, 255, 255, 0.08); }
+        
+        .nav-link { position: relative; padding-bottom: 5px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: #fff; transition: width 0.3s ease; }
+        .nav-link.active-nav::after { width: 100%; }
+        .nav-link:hover::after { width: 100%; }
     </style>
 </head>
 <body class="antialiased">
 
     <div id="pre-intro">
-        <div class="snake snake-1"></div>
-        <h1 class="text-5xl font-black tracking-tighter">RYPHERA</h1>
-    </div>
-
-    <div id="lang-overlay">
-        <div class="text-center">
-            <h2 class="text-3xl font-black mb-8 tracking-widest uppercase">Select Language / Dil Seçin</h2>
-            <div class="flex gap-6 justify-center">
-                <button onclick="initApp('TR')" class="glass px-10 py-5 rounded-2xl hover:bg-white/10 transition group text-xl font-bold">
-                    🇹🇷 TÜRKÇE
-                </button>
-                <button onclick="initApp('EN')" class="glass px-10 py-5 rounded-2xl hover:bg-white/10 transition group text-xl font-bold">
-                    🇺🇸 ENGLISH
-                </button>
-            </div>
-        </div>
+        <div class="snake-container"><div class="snake snake-1"></div><div class="snake snake-2"></div><div class="snake snake-3"></div></div>
+        <div id="pre-intro-text">RYPHERA</div>
     </div>
 
     <div id="main-content">
-        <nav class="p-8 flex items-center justify-between max-w-7xl mx-auto w-full">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="changePage('home')">
-                <img src="logo.png" class="h-10 w-10 rounded-full border border-white/10" onerror="this.src='https://via.placeholder.com/40'">
-                <span class="text-2xl font-black tracking-tighter">RYPHERA<span class="text-gray-600">OS</span></span>
+        <nav class="p-6 md:p-8 relative flex items-center justify-between max-w-7xl mx-auto w-full">
+            <div class="flex-1 flex justify-start">
+                <div class="cursor-pointer flex items-center gap-4 transition hover:scale-105" onclick="changePage('home')">
+                    <img src="logo.png" alt="Logo" class="h-12 md:h-14 w-auto rounded-lg" onerror="this.src='https://via.placeholder.com/60'">
+                    <span class="hidden md:block text-3xl font-black tracking-tighter">RYPHERA<span class="text-gray-600">OS</span></span>
+                </div>
             </div>
             
-            <div class="hidden md:flex gap-10 font-bold items-center uppercase">
-                <a href="#" onclick="changePage('home')" class="nav-link active-nav" id="nav-home">Home</a>
-                <a href="#" onclick="changePage('scripts')" class="nav-link" id="nav-scripts">Scripts</a>
-                <a href="#" onclick="changePage('apply')" class="nav-link" id="nav-apply">Apply</a>
-                <button onclick="toggleLang()" class="text-gray-500 hover:text-white transition text-xs border border-white/10 px-2 py-1 rounded" id="lang-toggle-btn">EN</button>
+            <div class="flex-1 flex justify-center space-x-10 hidden md:flex text-base uppercase tracking-widest font-bold text-gray-400">
+                <a href="#" onclick="changePage('home')" class="nav-link active-nav text-white transition" id="nav-home">Ana Sayfa</a>
+                <a href="#" onclick="changePage('scripts')" class="nav-link hover:text-white transition" id="nav-scripts">Scriptler</a>
+                <a href="#" onclick="changePage('apply')" class="nav-link hover:text-white transition" id="nav-apply">Başvuru</a>
             </div>
 
-            <div id="auth-box">
-                <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] px-6 py-2 rounded-full text-xs font-black transition-all">CONNECT</button>
+            <div class="flex-1 flex justify-end items-center gap-6">
+                <button onclick="toggleLanguage()" class="font-bold text-gray-500 hover:text-white text-lg transition" id="lang-toggle">EN</button>
+                <div id="auth-box">
+                    <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-3.5 rounded-xl font-black tracking-widest flex items-center gap-3 transition-all shadow-[0_0_20px_rgba(88,101,242,0.3)] text-sm md:text-base">
+                        <i class="fa-brands fa-discord text-2xl"></i> <span id="login-text">GİRİŞ YAP</span>
+                    </button>
+                </div>
             </div>
         </nav>
 
-        <div id="home-view" class="page-view active text-center py-24">
-            <h1 class="text-7xl md:text-9xl font-black tracking-tighter gradient-text mb-6" id="h-title">BEYOND.</h1>
-            <p class="text-gray-500 text-xl font-light" id="h-desc">Elite solutions for superior performance.</p>
+        <div id="home-view" class="page-view active">
+            <header class="py-32 px-6 text-center">
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 tracking-tighter gradient-text leading-none" id="h-title">GELECEĞİN <br> SCRIPT SİSTEMİ.</h1>
+                <p class="text-gray-400 text-xl md:text-2xl max-w-3xl mx-auto mb-14 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı. Ryphera OS ile fark yaratın.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-12 py-5 rounded-2xl font-black text-lg hover:bg-gray-300 transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
+                    <a href="#" onclick="changePage('scripts')" class="glass px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all" id="h-btn-2">SCRİPTLERİ GÖR</a>
+                </div>
+            </header>
         </div>
 
-        <div id="apply-view" class="page-view px-6">
-            <div class="max-w-2xl mx-auto glass p-10 rounded-[2.5rem]">
-                <h2 class="text-3xl font-black mb-8 tracking-tighter uppercase" id="a-title">Application</h2>
-                <div id="apply-lock" class="text-center py-10"><p class="text-gray-500" id="a-lock-msg">Login required.</p></div>
-                
-                <form id="apply-form" class="hidden space-y-6" onsubmit="handleApply(event)">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="f-name" required placeholder="Name">
-                        <input type="number" id="f-age" required placeholder="Age">
+        <div id="apply-view" class="page-view">
+            <section class="max-w-4xl mx-auto px-6 py-12">
+                <div class="glass p-10 md:p-14 rounded-[2rem] border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                    <h2 class="text-4xl md:text-5xl font-black mb-10 tracking-tighter text-white" id="f-header">YETKİLİ BAŞVURUSU</h2>
+                    
+                    <div id="apply-lock" class="text-center py-16">
+                        <i class="fa-solid fa-lock text-7xl text-gray-700 mb-6"></i>
+                        <h3 class="text-3xl font-bold mb-4 text-white" id="f-lock-title">Önce Giriş Yapmalısın</h3>
+                        <p class="text-gray-500 text-xl" id="f-lock-desc">Başvuru formunu görmek için Discord hesabını bağlaman gerekiyor.</p>
                     </div>
-                    <input type="text" id="f-active" required placeholder="Activity">
-                    <textarea id="f-why" rows="4" required placeholder="Details"></textarea>
-                    <button type="submit" class="w-full bg-white text-black py-4 rounded-xl font-black tracking-widest hover:bg-gray-200 transition" id="f-btn">SEND</button>
-                </form>
+
+                    <form id="apply-form" class="hidden space-y-8" onsubmit="handleApply(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest" id="l-name">İSİM SOYİSİM</label>
+                                <input type="text" id="i-name" required placeholder="...">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest" id="l-age">YAŞ</label>
+                                <input type="number" id="i-age" required placeholder="...">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest" id="l-active">GÜNLÜK AKTİFLİK (SAAT)</label>
+                            <input type="text" id="i-active" required placeholder="Örn: 5-6 Saat">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest" id="l-why">KOMUT BİLGİNİZ VE NEDEN BİZ?</label>
+                            <textarea id="i-why" rows="5" required placeholder="Bize kendinden bahset..."></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn" class="w-full bg-white text-black py-5 rounded-2xl font-black text-xl tracking-widest hover:bg-gray-300 transition-all mt-4">BAŞVURUYU GÖNDER</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <div id="scripts-view" class="page-view text-center py-24">
+            <div class="glass max-w-2xl mx-auto p-16 rounded-[2rem]">
+                <i class="fa-solid fa-ghost text-7xl mb-8 text-gray-700"></i>
+                <h3 class="text-4xl font-black mb-4" id="s-title">Yakında Yayındayız</h3>
+                <p class="text-gray-500 text-xl" id="s-desc">Premium scriptler çok yakında burada listelenecek.</p>
             </div>
         </div>
-        
-        <div id="scripts-view" class="page-view text-center py-20">
-            <h2 class="text-3xl font-bold text-gray-700" id="s-msg">Coming Soon...</h2>
-        </div>
+
     </div>
 
     <script>
         const CLIENT_ID = "1491071700715048970";
         const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
-        const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
             EN: "https://discord.com/api/webhooks/1491124036359557362/2v_uo05PuQS1dPSIvdKCRCHcRAaZPS8s8d6G0koGce9fDG4J6BDWAn20cXNnfQoWQgaA"
         };
 
-        const translations = {
+        const texts = {
             TR: {
-                home: "ANA SAYFA", scripts: "SCRİPTLER", apply: "BAŞVURU", hTitle: "ÖTESİ.", hDesc: "Üstün performans için elit çözümler.",
-                aTitle: "YETKİLİ BAŞVURUSU", aLock: "Giriş yapmanız gerekiyor.", fName: "İsim Soyisim", fAge: "Yaş", fActive: "Günlük Aktiflik", fWhy: "Neden biz?", fBtn: "BAŞVURUYU GÖNDER", sMsg: "Çok Yakında..."
+                navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", loginTxt: "GİRİŞ YAP",
+                hTitle: "GELECEĞİN <br> SCRIPT SİSTEMİ.", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı. Ryphera OS ile fark yaratın.",
+                hBtn1: "ŞİMDİ KATIL", hBtn2: "SCRİPTLERİ GÖR",
+                fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Başvuru formunu görmek için Discord hesabını bağlaman gerekiyor.",
+                lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK (SAAT)", lWhy: "KOMUT BİLGİNİZ VE NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER",
+                sTitle: "Yakında Yayındayız", sDesc: "Premium scriptler çok yakında burada listelenecek."
             },
             EN: {
-                home: "HOME", scripts: "SCRIPTS", apply: "APPLY", hTitle: "BEYOND.", hDesc: "Elite solutions for superior performance.",
-                aTitle: "STAFF APPLICATION", aLock: "Login required.", fName: "Full Name", fAge: "Age", fActive: "Daily Activity", fWhy: "Why us?", fBtn: "SUBMIT APPLICATION", sMsg: "Coming Soon..."
+                navHome: "Home", navScripts: "Scripts", navApply: "Apply", loginTxt: "LOGIN",
+                hTitle: "THE FUTURE OF <br> SCRIPTING.", hDesc: "Fast, secure, and fully optimized infrastructure. Dominate with Ryphera OS.",
+                hBtn1: "JOIN NOW", hBtn2: "VIEW SCRIPTS",
+                fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "You must connect your Discord account to view the application form.",
+                lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY (HOURS)", lWhy: "YOUR EXPERIENCE & WHY US?", submitBtn: "SUBMIT APPLICATION",
+                sTitle: "Coming Soon", sDesc: "Premium scripts will be listed here very soon."
             }
         };
 
-        let currentLang = localStorage.getItem('ry_lang') || null;
+        let currentLang = localStorage.getItem('ry_lang') || 'TR';
         let user = null;
 
-        // 1. INTRO BİTİŞ KONTROLÜ
         window.onload = () => {
-            setTimeout(() => {
-                if (currentLang) {
-                    initApp(currentLang);
-                } else {
-                    const overlay = document.getElementById('lang-overlay');
-                    overlay.style.display = 'flex';
-                    setTimeout(() => overlay.style.opacity = '1', 50);
-                }
-            }, 3800);
+            updateLanguageUI();
+            checkDiscordAuth();
+            setTimeout(() => { 
+                document.getElementById('main-content').style.opacity = '1'; 
+                document.body.style.overflow = 'auto'; 
+                document.getElementById('pre-intro').style.display = 'none';
+            }, 4500);
         };
 
-        function initApp(lang) {
-            currentLang = lang;
-            localStorage.setItem('ry_lang', lang);
-            document.getElementById('lang-overlay').style.display = 'none';
-            document.getElementById('main-content').style.opacity = '1';
-            document.body.style.overflow = 'auto';
-            applyTranslations();
-            checkDiscord();
+        function toggleLanguage() {
+            currentLang = currentLang === 'TR' ? 'EN' : 'TR';
+            localStorage.setItem('ry_lang', currentLang);
+            updateLanguageUI();
         }
 
-        function toggleLang() {
-            initApp(currentLang === 'TR' ? 'EN' : 'TR');
-        }
+        function updateLanguageUI() {
+            const t = texts[currentLang];
+            document.getElementById('lang-toggle').innerText = currentLang === 'TR' ? 'EN' : 'TR';
+            
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-scripts').innerText = t.navScripts;
+            document.getElementById('nav-apply').innerText = t.navApply;
+            if(!user) document.getElementById('login-text').innerText = t.loginTxt;
 
-        function applyTranslations() {
-            const t = translations[currentLang];
-            document.getElementById('nav-home').innerText = t.home;
-            document.getElementById('nav-scripts').innerText = t.scripts;
-            document.getElementById('nav-apply').innerText = t.apply;
-            document.getElementById('lang-toggle-btn').innerText = currentLang;
-            document.getElementById('h-title').innerText = t.hTitle;
+            document.getElementById('h-title').innerHTML = t.hTitle;
             document.getElementById('h-desc').innerText = t.hDesc;
-            document.getElementById('a-title').innerText = t.aTitle;
-            document.getElementById('a-lock-msg').innerText = t.aLock;
-            document.getElementById('f-name').placeholder = t.fName;
-            document.getElementById('f-age').placeholder = t.fAge;
-            document.getElementById('f-active').placeholder = t.fActive;
-            document.getElementById('f-why').placeholder = t.fWhy;
-            document.getElementById('f-btn').innerText = t.fBtn;
-            document.getElementById('s-msg').innerText = t.sMsg;
+            document.getElementById('h-btn-1').innerText = t.hBtn1;
+            document.getElementById('h-btn-2').innerText = t.hBtn2;
+
+            document.getElementById('f-header').innerText = t.fHeader;
+            document.getElementById('f-lock-title').innerText = t.fLockTitle;
+            document.getElementById('f-lock-desc').innerText = t.fLockDesc;
+            
+            document.getElementById('l-name').innerText = t.lName;
+            document.getElementById('l-age').innerText = t.lAge;
+            document.getElementById('l-active').innerText = t.lActive;
+            document.getElementById('l-why').innerText = t.lWhy;
+            document.getElementById('submit-btn').innerText = t.submitBtn;
+
+            document.getElementById('s-title').innerText = t.sTitle;
+            document.getElementById('s-desc').innerText = t.sDesc;
         }
 
-        function checkDiscord() {
+        function checkDiscordAuth() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             const token = hash.get('access_token') || localStorage.getItem('ry_token');
+
             if (token) {
                 fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
-                .then(res => res.json()).then(data => {
-                    if(data.id) {
-                        user = data; localStorage.setItem('ry_token', token);
-                        document.getElementById('auth-box').innerHTML = `<img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-8 h-8 rounded-full border border-white/10">`;
+                .then(res => res.json())
+                .then(data => {
+                    if (data.id) {
+                        user = data;
+                        localStorage.setItem('ry_token', token);
+                        document.getElementById('auth-box').innerHTML = `
+                            <div class="flex items-center gap-3 bg-white/5 p-2 pr-5 rounded-xl border border-white/10 shadow-lg">
+                                <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-10 h-10 rounded-lg">
+                                <span class="text-sm font-bold uppercase tracking-widest">${data.username}</span>
+                            </div>`;
                         document.getElementById('apply-lock').classList.add('hidden');
                         document.getElementById('apply-form').classList.remove('hidden');
                         window.history.replaceState({}, document.title, window.location.pathname);
+                    } else {
+                        localStorage.removeItem('ry_token');
                     }
                 });
             }
@@ -189,31 +236,49 @@
 
         function handleApply(e) {
             e.preventDefault();
-            const btn = document.getElementById('f-btn');
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
             btn.disabled = true; btn.innerText = "...";
+
             const payload = {
                 embeds: [{
-                    title: `📩 Application (${currentLang})`,
+                    title: `📩 Yeni Başvuru / New App (${currentLang})`,
                     color: 0xffffff,
                     fields: [
-                        { name: "User", value: `<@${user.id}>`, inline: true },
-                        { name: "Name", value: document.getElementById('f-name').value, inline: true },
-                        { name: "Age", value: document.getElementById('f-age').value, inline: true },
-                        { name: "Activity", value: document.getElementById('f-active').value },
-                        { name: "Details", value: document.getElementById('f-why').value }
+                        { name: "Kullanıcı", value: `<@${user.id}> (${user.username})`, inline: true },
+                        { name: "İsim", value: document.getElementById('i-name').value, inline: true },
+                        { name: "Yaş", value: document.getElementById('i-age').value, inline: true },
+                        { name: "Aktiflik", value: document.getElementById('i-active').value },
+                        { name: "Detaylar", value: document.getElementById('i-why').value }
                     ],
-                    footer: { text: `User ID: ${user.id}` }
+                    footer: { text: `User ID: ${user.id}` },
+                    timestamp: new Date().toISOString()
                 }]
             };
-            fetch(WEBHOOKS[currentLang], { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-            .then(() => { btn.innerText = "DONE ✅"; btn.style.background = "green"; });
+
+            fetch(WEBHOOKS[currentLang], {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                btn.innerText = currentLang === 'TR' ? "BAŞARIYLA GÖNDERİLDİ ✅" : "SUCCESSFULLY SENT ✅";
+                btn.style.background = "#00FF00";
+                btn.style.color = "#000";
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                    btn.style.background = "#fff";
+                    e.target.reset();
+                }, 3000);
+            });
         }
 
         function changePage(id) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav', 'text-white'));
             document.getElementById(id + '-view').classList.add('active');
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
-            document.getElementById('nav-' + id).classList.add('active-nav');
+            const nav = document.getElementById('nav-' + id);
+            if(nav) { nav.classList.add('active-nav', 'text-white'); }
         }
     </script>
 </body>
