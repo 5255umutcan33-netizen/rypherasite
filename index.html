@@ -12,8 +12,8 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* INTRO (Geçiş Efekti Eklendi) */
-        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        /* YILANLI INTRO */
+        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
         .snake-1 { top: 20%; animation: slitherRight 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
@@ -26,18 +26,20 @@
         @keyframes slitherDiagonal { 0% { transform: translate(-200px, 100px) rotate(-20deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(120vw, -300px) rotate(-20deg); opacity: 0; } }
         @keyframes textReveal { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0px); } }
         
+        /* DİL SEÇİM EKRANI */
         #lang-overlay { position: fixed; inset: 0; background: #0a0a0a; z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
         .lang-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 3rem; border-radius: 1rem; font-size: 1.25rem; font-weight: bold; cursor: pointer; transition: all 0.3s; color: white; display: flex; align-items: center; gap: 10px; }
         .lang-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: #5865F2; transform: translateY(-3px); }
 
+        /* ANA İÇERİK */
         #main-content { opacity: 0; transition: opacity 0.8s ease-in; display: flex; flex-direction: column; min-height: 100vh; }
         .page-view { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s ease-out; flex-grow: 1; }
         .page-view.active { display: block; opacity: 1; transform: translateY(0); }
         
-        input, textarea, select { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 0.5rem; padding: 1rem; width: 100%; outline: none; font-size: 1rem; transition: border 0.3s; }
-        input:focus, textarea:focus, select:focus { border-color: #5865F2; background: rgba(255, 255, 255, 0.06); }
-        select option { background-color: #0a0a0a; }
-
+        /* ORTA BOYUT FORMLAR */
+        input, textarea { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 0.5rem; padding: 1rem; width: 100%; outline: none; font-size: 1rem; transition: border 0.3s; }
+        input:focus, textarea:focus { border-color: #5865F2; background: rgba(255, 255, 255, 0.06); }
+        
         .nav-link { position: relative; padding-bottom: 3px; font-size: 0.875rem; letter-spacing: 0.1em; color: #9ca3af; transition: 0.3s; }
         .nav-link:hover, .nav-link.active-nav { color: #ffffff; }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: #fff; transition: width 0.3s ease; }
@@ -49,7 +51,10 @@
 </head>
 <body class="antialiased">
 
-    <div id="pre-intro"><div class="snake-container"><div class="snake snake-1"></div><div class="snake snake-2"></div><div class="snake snake-3"></div></div><div id="pre-intro-text">RYPHERA</div></div>
+    <div id="pre-intro">
+        <div class="snake-container"><div class="snake snake-1"></div><div class="snake snake-2"></div><div class="snake snake-3"></div></div>
+        <div id="pre-intro-text">RYPHERA</div>
+    </div>
 
     <div id="lang-overlay">
         <h2 class="text-2xl md:text-3xl font-black mb-8 tracking-widest uppercase">Select Language / Dil Seçin</h2>
@@ -124,8 +129,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left admin-table">
                             <thead><tr><th id="p-th-key">LİSANS ANAHTARI</th><th id="p-th-hwid">HWID</th><th id="p-th-exp">BİTİŞ SÜRESİ</th></tr></thead>
-                            <tbody id="user-keys-tbody">
-                                </tbody>
+                            <tbody id="user-keys-tbody"></tbody>
                         </table>
                         <div id="user-no-keys" class="text-center py-8 text-gray-500 text-sm hidden">Hiç lisans anahtarınız bulunmuyor.</div>
                     </div>
@@ -165,24 +169,12 @@
         <div id="admin-view" class="page-view">
             <section class="max-w-5xl mx-auto px-6 py-8">
                 <div class="glass p-8 md:p-10 rounded-[1.5rem] border border-red-500/20 shadow-[0_0_30px_rgba(255,0,0,0.1)]">
-                    <h2 class="text-3xl font-black text-white mb-6" id="ad-title">LİSANS YÖNETİMİ</h2>
-                    
-                    <div class="bg-black/40 p-6 rounded-xl border border-white/5 mb-8 flex flex-col md:flex-row gap-4 items-end">
-                        <div class="w-full md:w-1/2">
-                            <label class="block text-xs font-bold text-gray-400 mb-2" id="ad-l-custom">ÖZEL KEY ADI</label>
-                            <input type="text" id="custom-key-name" placeholder="Örn: RYP-UMUTCAN-VIP">
-                        </div>
-                        <div class="w-full md:w-1/4">
-                            <label class="block text-xs font-bold text-gray-400 mb-2" id="ad-l-time">SÜRE</label>
-                            <select id="custom-key-time">
-                                <option value="Sınırsız">Sınırsız (Lifetime)</option>
-                                <option value="30 Gün">30 Gün</option>
-                                <option value="7 Gün">7 Gün</option>
-                            </select>
-                        </div>
-                        <div class="w-full md:w-1/4">
-                            <button onclick="generateCustomKey()" class="w-full bg-red-600 hover:bg-red-500 text-white py-3.5 rounded-lg font-bold text-sm transition-all" id="ad-gen-btn">OLUŞTUR</button>
-                        </div>
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                        <h2 class="text-3xl font-black text-white" id="ad-title">LİSANS YÖNETİMİ</h2>
+                        
+                        <button onclick="generateKey()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-3 rounded-xl font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)] flex items-center gap-2">
+                            <i class="fa-solid fa-key"></i> <span id="ad-gen-btn">YENİ KEY ÜRET</span>
+                        </button>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -212,14 +204,14 @@
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Admin", loginTxt: "GİRİŞ YAP",
                 hTitle: "GELECEĞİN <br> SCRIPT SİSTEMİ.", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
                 statKey: "AKTİF LİSANS", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
-                adTitle: "LİSANS YÖNETİMİ", adLKey: "ÖZEL KEY ADI", adLTime: "SÜRE", adGenBtn: "OLUŞTUR",
+                adTitle: "LİSANS YÖNETİMİ", adGenBtn: "YENİ KEY ÜRET",
                 pTitle: "Sahip Olduğum Lisanslar", pNoKey: "Hiç lisans anahtarınız bulunmuyor."
             },
             EN: {
                 navHome: "Home", navScripts: "Scripts", navApply: "Apply", navAdmin: "Admin", loginTxt: "LOGIN",
                 hTitle: "FUTURE OF <br> SCRIPTING.", hDesc: "Fast, secure and fully optimized infrastructure.",
                 statKey: "ACTIVE LICENSES", statScript: "TOTAL SCRIPTS", statBtn: "VIEW",
-                adTitle: "LICENSE MANAGEMENT", adLKey: "CUSTOM KEY NAME", adLTime: "DURATION", adGenBtn: "GENERATE",
+                adTitle: "LICENSE MANAGEMENT", adGenBtn: "GENERATE KEY",
                 pTitle: "My Licenses", pNoKey: "You do not own any license keys."
             }
         };
@@ -227,7 +219,6 @@
         let currentLang = 'TR';
         let user = null;
 
-        // DONMA SORUNU ÇÖZÜMÜ: DOMContentLoaded KULLANILDI
         document.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash;
             
@@ -247,7 +238,6 @@
                     }, 500);
                 }, 3500);
             }
-            updateStats();
         });
 
         function initApp(lang, skipAnim = false) {
@@ -258,8 +248,11 @@
                 overlay.style.display = 'none';
                 document.getElementById('main-content').style.opacity = '1';
                 document.body.style.overflow = 'auto';
+                
                 updateLanguageUI();
                 checkDiscordAuth();
+                
+                // BU 3 FONKSİYON SAYFA AÇILINCA KESİN ÇALIŞACAK (KEYLERİN GÖRÜNME GARANTİSİ)
                 renderKeys();
                 renderUserKeys();
                 updateStats();
@@ -288,8 +281,6 @@
             document.getElementById('stat-btn').innerText = t.statBtn;
             
             document.getElementById('ad-title').innerText = t.adTitle;
-            document.getElementById('ad-l-custom').innerText = t.adLKey;
-            document.getElementById('ad-l-time').innerText = t.adLTime;
             document.getElementById('ad-gen-btn').innerText = t.adGenBtn;
             
             document.getElementById('p-licenses-title').innerText = t.pTitle;
@@ -307,7 +298,7 @@
                         user = data; localStorage.setItem('ry_token', token);
                         document.getElementById('auth-box').innerHTML = `
                             <div onclick="changePage('profile')" class="cursor-pointer flex items-center gap-2 bg-white/5 p-1.5 pr-4 rounded-lg border border-white/10 shadow hover:bg-white/10 transition">
-                                <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-8 h-8 rounded">
+                                <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-7 h-7 rounded">
                                 <span class="text-xs font-bold uppercase">${data.username}</span>
                             </div>`;
                         
@@ -319,6 +310,8 @@
                         document.getElementById('apply-form').classList.remove('hidden');
                         if (user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
                         window.history.replaceState({}, document.title, window.location.pathname);
+                        
+                        // User belli olunca profil keylerini tekrar çek
                         renderUserKeys();
                     } else {
                         localStorage.removeItem('ry_token');
@@ -330,35 +323,51 @@
         function loginWithDiscord() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; }
 
         function updateStats() {
-            let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            document.getElementById('stat-keys-count').innerText = keys.length;
-            document.getElementById('stat-scripts-count').innerText = "0"; 
+            try {
+                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
+                document.getElementById('stat-keys-count').innerText = keys.length;
+                document.getElementById('stat-scripts-count').innerText = "0";
+            } catch(e) {
+                localStorage.setItem('ry_keys', '[]'); // Hata olursa sıfırla
+            }
         }
 
-        function generateCustomKey() {
-            let customName = document.getElementById('custom-key-name').value.trim();
-            const timeVal = document.getElementById('custom-key-time').value;
-            if(!customName) customName = `RYP-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+        // ================= ADMIN PANEL: TEK TUŞLA KEY ÜRETİMİ =================
+        function generateKey() {
+            // Rastgele RYP key oluşturucu
+            const p1 = Math.random().toString(36).substr(2, 4).toUpperCase();
+            const p2 = Math.random().toString(36).substr(2, 4).toUpperCase();
+            const p3 = Math.random().toString(36).substr(2, 4).toUpperCase();
+            const newKey = `RYP-${p1}-${p2}-${p3}`;
 
-            let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
+            // Standart 30 Günlük Süre
+            const expiry = "Sınırsız";
             const mockOwnerId = user ? user.id : null; 
 
-            keys.unshift({ key: customName, hwid: null, expiry: timeVal, owner: mockOwnerId });
-            localStorage.setItem('ry_keys', JSON.stringify(keys));
-            
-            document.getElementById('custom-key-name').value = '';
-            renderKeys(); renderUserKeys(); updateStats();
+            try {
+                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
+                keys.unshift({ key: newKey, hwid: null, expiry: expiry, owner: mockOwnerId });
+                localStorage.setItem('ry_keys', JSON.stringify(keys));
+                
+                renderKeys(); 
+                renderUserKeys(); 
+                updateStats();
+            } catch(e) {
+                console.error("Key oluşturulamadı", e);
+            }
         }
 
         function resetHWID(index) {
             let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            keys[index].hwid = null;
-            localStorage.setItem('ry_keys', JSON.stringify(keys));
-            renderKeys(); renderUserKeys();
+            if(keys[index]) {
+                keys[index].hwid = null;
+                localStorage.setItem('ry_keys', JSON.stringify(keys));
+                renderKeys(); renderUserKeys();
+            }
         }
 
         function deleteKey(index) {
-            if(confirm('Emin misin?')) {
+            if(confirm(currentLang === 'TR' ? 'Emin misin?' : 'Are you sure?')) {
                 let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
                 keys.splice(index, 1);
                 localStorage.setItem('ry_keys', JSON.stringify(keys));
@@ -366,50 +375,70 @@
             }
         }
 
+        // KEYLERİ TABLOYA YAZDIRAN KISIM
         function renderKeys() {
-            let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
             const tbody = document.getElementById('keys-tbody');
             const noKeysMsg = document.getElementById('no-keys-msg');
-            tbody.innerHTML = '';
-            if(keys.length === 0) { noKeysMsg.classList.remove('hidden'); } else {
-                noKeysMsg.classList.add('hidden');
-                keys.forEach((k, idx) => {
-                    const hwidText = k.hwid ? `<span class="text-red-400 text-xs"><i class="fa-solid fa-lock"></i> Kilitli</span>` : `<span class="text-green-400 text-xs"><i class="fa-solid fa-unlock"></i> Açık</span>`;
-                    tbody.innerHTML += `
-                        <tr>
-                            <td class="font-mono text-white font-bold">${k.key}</td>
-                            <td>${hwidText}</td>
-                            <td class="text-gray-400 font-bold">${k.expiry}</td>
-                            <td class="text-right space-x-2">
-                                <button onclick="resetHWID(${idx})" class="text-xs bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-rotate-right"></i></button>
-                                <button onclick="deleteKey(${idx})" class="text-xs bg-red-900/50 hover:bg-red-600 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>`;
-                });
+            
+            try {
+                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
+                tbody.innerHTML = '';
+                
+                if(keys.length === 0) { 
+                    noKeysMsg.classList.remove('hidden'); 
+                } else {
+                    noKeysMsg.classList.add('hidden');
+                    keys.forEach((k, idx) => {
+                        const hwidText = k.hwid 
+                            ? `<span class="text-red-400 text-xs"><i class="fa-solid fa-lock"></i> Kilitli</span>` 
+                            : `<span class="text-green-400 text-xs"><i class="fa-solid fa-unlock"></i> Açık</span>`;
+                            
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-white/5 transition">
+                                <td class="font-mono text-white font-bold">${k.key}</td>
+                                <td>${hwidText}</td>
+                                <td class="text-gray-400 font-bold">${k.expiry}</td>
+                                <td class="text-right space-x-2">
+                                    <button onclick="resetHWID(${idx})" class="text-xs bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-rotate-right"></i></button>
+                                    <button onclick="deleteKey(${idx})" class="text-xs bg-red-900/50 hover:bg-red-600 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>`;
+                    });
+                }
+            } catch(e) {
+                console.error("Tablo yüklenirken hata", e);
+                localStorage.setItem('ry_keys', '[]'); // Bozuk veriyi düzelt
             }
         }
 
         function renderUserKeys() {
             if(!user) return;
-            let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            const myKeys = keys.filter(k => k.owner === user.id);
-            
-            const tbody = document.getElementById('user-keys-tbody');
-            const noKeysMsg = document.getElementById('user-no-keys');
-            tbody.innerHTML = '';
-            
-            if(myKeys.length === 0) { noKeysMsg.classList.remove('hidden'); } else {
-                noKeysMsg.classList.add('hidden');
-                myKeys.forEach((k) => {
-                    const hwidText = k.hwid ? `<span class="text-red-400 text-xs">Cihaza Kayıtlı</span>` : `<span class="text-green-400 text-xs">Boşta (Kullanıma Hazır)</span>`;
-                    tbody.innerHTML += `
-                        <tr>
-                            <td class="font-mono text-white font-bold bg-white/5 px-2 py-1 rounded inline-block mt-2">${k.key}</td>
-                            <td class="pt-4">${hwidText}</td>
-                            <td class="text-gray-400 pt-4">${k.expiry}</td>
-                        </tr>`;
-                });
-            }
+            try {
+                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
+                const myKeys = keys.filter(k => k.owner === user.id);
+                
+                const tbody = document.getElementById('user-keys-tbody');
+                const noKeysMsg = document.getElementById('user-no-keys');
+                tbody.innerHTML = '';
+                
+                if(myKeys.length === 0) { 
+                    noKeysMsg.classList.remove('hidden'); 
+                } else {
+                    noKeysMsg.classList.add('hidden');
+                    myKeys.forEach((k) => {
+                        const hwidText = k.hwid 
+                            ? `<span class="text-red-400 text-xs"><i class="fa-solid fa-lock"></i> Cihaza Kayıtlı</span>` 
+                            : `<span class="text-green-400 text-xs"><i class="fa-solid fa-unlock"></i> Boşta</span>`;
+                            
+                        tbody.innerHTML += `
+                            <tr class="border-b border-white/5">
+                                <td class="font-mono text-white font-bold bg-white/5 px-2 py-1 rounded inline-block my-2">${k.key}</td>
+                                <td class="py-2">${hwidText}</td>
+                                <td class="text-gray-400 py-2">${k.expiry}</td>
+                            </tr>`;
+                    });
+                }
+            } catch(e) {}
         }
 
         function handleApply(e) {
