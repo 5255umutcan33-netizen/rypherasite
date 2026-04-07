@@ -12,8 +12,8 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* YILANLI INTRO */
-        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        /* INTRO */
+        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
         .snake-1 { top: 20%; animation: slitherRight 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
@@ -26,17 +26,16 @@
         @keyframes slitherDiagonal { 0% { transform: translate(-200px, 100px) rotate(-20deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(120vw, -300px) rotate(-20deg); opacity: 0; } }
         @keyframes textReveal { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0px); } }
         
-        /* DİL SEÇİM EKRANI */
+        /* DİL SEÇİMİ */
         #lang-overlay { position: fixed; inset: 0; background: #0a0a0a; z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
         .lang-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 3rem; border-radius: 1rem; font-size: 1.25rem; font-weight: bold; cursor: pointer; transition: all 0.3s; color: white; display: flex; align-items: center; gap: 10px; }
         .lang-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: #5865F2; transform: translateY(-3px); }
 
-        /* ANA İÇERİK */
+        /* İÇERİK */
         #main-content { opacity: 0; transition: opacity 0.8s ease-in; display: flex; flex-direction: column; min-height: 100vh; }
         .page-view { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s ease-out; flex-grow: 1; }
         .page-view.active { display: block; opacity: 1; transform: translateY(0); }
         
-        /* ORTA BOYUT FORMLAR */
         input, textarea { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 0.5rem; padding: 1rem; width: 100%; outline: none; font-size: 1rem; transition: border 0.3s; }
         input:focus, textarea:focus { border-color: #5865F2; background: rgba(255, 255, 255, 0.06); }
         
@@ -44,9 +43,6 @@
         .nav-link:hover, .nav-link.active-nav { color: #ffffff; }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: #fff; transition: width 0.3s ease; }
         .nav-link.active-nav::after, .nav-link:hover::after { width: 100%; }
-
-        .admin-table th { background: rgba(255,255,255,0.02); padding: 1rem; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: #9ca3af; }
-        .admin-table td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body class="antialiased">
@@ -77,7 +73,6 @@
                 <a href="#" onclick="changePage('home')" class="nav-link active-nav" id="nav-home">Ana Sayfa</a>
                 <a href="#" onclick="changePage('scripts')" class="nav-link" id="nav-scripts">Scriptler</a>
                 <a href="#" onclick="changePage('apply')" class="nav-link" id="nav-apply">Başvuru</a>
-                <a href="#" onclick="changePage('admin')" class="nav-link text-red-500 hidden" id="nav-admin">Admin</a>
             </div>
 
             <div class="flex-1 flex justify-end items-center gap-4">
@@ -91,60 +86,27 @@
         </nav>
 
         <div id="home-view" class="page-view active">
-            <header class="py-20 px-6 text-center">
+            <header class="py-24 px-6 text-center">
                 <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter gradient-text leading-none" id="h-title">GELECEĞİN <br> SCRIPT SİSTEMİ.</h1>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı. Ryphera OS ile fark yaratın.</p>
-                <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
+                <div class="flex flex-col md:flex-row justify-center gap-6">
                     <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
-                    <div class="glass p-8 rounded-2xl border-white/5 relative overflow-hidden group">
-                        <div class="absolute -right-10 -top-10 opacity-10 group-hover:scale-110 transition-transform"><i class="fa-solid fa-key text-9xl"></i></div>
-                        <h3 class="text-5xl font-black text-white mb-2" id="stat-keys-count">0</h3>
-                        <p class="text-gray-400 font-bold tracking-widest uppercase" id="stat-keys-text">AKTİF LİSANS</p>
-                    </div>
-                    <div class="glass p-8 rounded-2xl border-white/5 relative overflow-hidden group">
-                        <div class="absolute -right-10 -top-10 opacity-10 group-hover:scale-110 transition-transform"><i class="fa-solid fa-code text-9xl"></i></div>
-                        <h3 class="text-5xl font-black text-white mb-2" id="stat-scripts-count">0</h3>
-                        <p class="text-gray-400 font-bold tracking-widest uppercase mb-4" id="stat-scripts-text">TOPLAM SCRİPT</p>
-                        <button onclick="changePage('scripts')" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded text-xs font-bold uppercase transition" id="stat-btn">GÖRÜNTÜLE</button>
-                    </div>
+                    <a href="#" onclick="changePage('scripts')" class="glass px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-white/10 transition-all" id="h-btn-2">SCRİPTLERİ GÖR</a>
                 </div>
             </header>
-        </div>
-
-        <div id="profile-view" class="page-view">
-            <section class="max-w-4xl mx-auto px-6 py-8">
-                <div class="glass p-8 md:p-10 rounded-[1.5rem] border-white/10 shadow-2xl">
-                    <div class="flex items-center gap-6 mb-10 pb-10 border-b border-white/10">
-                        <img src="" id="profile-avatar" class="w-24 h-24 rounded-2xl border border-white/20 shadow-lg" onerror="this.src='https://via.placeholder.com/100'">
-                        <div>
-                            <h2 class="text-3xl font-black text-white uppercase" id="profile-name">KULLANICI</h2>
-                            <p class="text-gray-400 text-sm font-mono mt-1" id="profile-id">ID: -</p>
-                        </div>
-                    </div>
-
-                    <h3 class="text-xl font-bold mb-6 tracking-widest uppercase" id="p-licenses-title">Sahip Olduğum Lisanslar</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left admin-table">
-                            <thead><tr><th id="p-th-key">LİSANS ANAHTARI</th><th id="p-th-hwid">HWID</th><th id="p-th-exp">BİTİŞ SÜRESİ</th></tr></thead>
-                            <tbody id="user-keys-tbody"></tbody>
-                        </table>
-                        <div id="user-no-keys" class="text-center py-8 text-gray-500 text-sm hidden">Hiç lisans anahtarınız bulunmuyor.</div>
-                    </div>
-                </div>
-            </section>
         </div>
 
         <div id="apply-view" class="page-view">
             <section class="max-w-3xl mx-auto px-6 py-8">
                 <div class="glass p-8 md:p-10 rounded-[1.5rem] border-white/10 shadow-2xl">
                     <h2 class="text-3xl font-black mb-8 tracking-tighter text-white" id="f-header">YETKİLİ BAŞVURUSU</h2>
+                    
                     <div id="apply-lock" class="text-center py-12">
                         <i class="fa-solid fa-lock text-5xl text-gray-700 mb-4"></i>
                         <h3 class="text-2xl font-bold mb-2 text-white" id="f-lock-title">Önce Giriş Yapmalısın</h3>
+                        <p class="text-gray-500 text-sm" id="f-lock-desc">Formu doldurabilmek için Discord hesabınla bağlan.</p>
                     </div>
+
                     <form id="apply-form" class="hidden space-y-6" onsubmit="handleApply(event)">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-name">İSİM SOYİSİM</label><input type="text" id="i-name" required placeholder="..."></div>
@@ -152,7 +114,7 @@
                         </div>
                         <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-active">AKTİFLİK</label><input type="text" id="i-active" required placeholder="..."></div>
                         <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-why">NEDEN BİZ?</label><textarea id="i-why" rows="4" required placeholder="..."></textarea></div>
-                        <button type="submit" id="submit-btn" class="w-full bg-white text-black py-3.5 rounded-xl font-black text-sm tracking-widest hover:bg-gray-300 transition-all mt-2">GÖNDER</button>
+                        <button type="submit" id="submit-btn" class="w-full bg-white text-black py-3.5 rounded-xl font-black text-sm tracking-widest hover:bg-gray-300 transition-all mt-2">BAŞVURUYU GÖNDER</button>
                     </form>
                 </div>
             </section>
@@ -160,32 +122,10 @@
 
         <div id="scripts-view" class="page-view text-center py-20">
             <div class="glass max-w-xl mx-auto p-12 rounded-[1.5rem]">
-                <i class="fa-solid fa-ghost text-5xl mb-6 text-gray-700"></i>
+                <i class="fa-solid fa-ghost text-5xl mb-6 text-gray-700 animate-pulse"></i>
                 <h3 class="text-3xl font-black mb-3" id="s-title">Yakında Yayındayız</h3>
                 <p class="text-gray-500 text-base" id="s-desc">Premium scriptler çok yakında burada listelenecek.</p>
             </div>
-        </div>
-
-        <div id="admin-view" class="page-view">
-            <section class="max-w-5xl mx-auto px-6 py-8">
-                <div class="glass p-8 md:p-10 rounded-[1.5rem] border border-red-500/20 shadow-[0_0_30px_rgba(255,0,0,0.1)]">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-                        <h2 class="text-3xl font-black text-white" id="ad-title">LİSANS YÖNETİMİ</h2>
-                        
-                        <button onclick="generateKey()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-3 rounded-xl font-bold text-sm transition-all shadow-[0_0_15px_rgba(88,101,242,0.4)] flex items-center gap-2">
-                            <i class="fa-solid fa-key"></i> <span id="ad-gen-btn">YENİ KEY ÜRET</span>
-                        </button>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left admin-table">
-                            <thead><tr><th id="ad-th-key">LİSANS ANAHTARI</th><th id="ad-th-hwid">HWID</th><th id="ad-th-exp">BİTİŞ SÜRESİ</th><th class="text-right" id="ad-th-act">İŞLEMLER</th></tr></thead>
-                            <tbody id="keys-tbody"></tbody>
-                        </table>
-                        <div id="no-keys-msg" class="text-center py-8 text-gray-500 text-sm hidden">Veritabanında key bulunmuyor.</div>
-                    </div>
-                </div>
-            </section>
         </div>
 
     </div>
@@ -193,7 +133,6 @@
     <script>
         const CLIENT_ID = "1491071700715048970";
         const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
-        const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
             EN: "https://discord.com/api/webhooks/1491124036359557362/2v_uo05PuQS1dPSIvdKCRCHcRAaZPS8s8d6G0koGce9fDG4J6BDWAn20cXNnfQoWQgaA"
@@ -201,24 +140,27 @@
 
         const texts = {
             TR: {
-                navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Admin", loginTxt: "GİRİŞ YAP",
+                navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", loginTxt: "GİRİŞ YAP",
                 hTitle: "GELECEĞİN <br> SCRIPT SİSTEMİ.", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
-                statKey: "AKTİF LİSANS", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
-                adTitle: "LİSANS YÖNETİMİ", adGenBtn: "YENİ KEY ÜRET",
-                pTitle: "Sahip Olduğum Lisanslar", pNoKey: "Hiç lisans anahtarınız bulunmuyor."
+                hBtn1: "ŞİMDİ KATIL", hBtn2: "SCRİPTLERİ GÖR",
+                fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Formu doldurabilmek için Discord hesabınla bağlan.",
+                lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER",
+                sTitle: "Yakında Yayındayız", sDesc: "Premium scriptler çok yakında burada listelenecek."
             },
             EN: {
-                navHome: "Home", navScripts: "Scripts", navApply: "Apply", navAdmin: "Admin", loginTxt: "LOGIN",
+                navHome: "Home", navScripts: "Scripts", navApply: "Apply", loginTxt: "LOGIN",
                 hTitle: "FUTURE OF <br> SCRIPTING.", hDesc: "Fast, secure and fully optimized infrastructure.",
-                statKey: "ACTIVE LICENSES", statScript: "TOTAL SCRIPTS", statBtn: "VIEW",
-                adTitle: "LICENSE MANAGEMENT", adGenBtn: "GENERATE KEY",
-                pTitle: "My Licenses", pNoKey: "You do not own any license keys."
+                hBtn1: "JOIN NOW", hBtn2: "VIEW SCRIPTS",
+                fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "Please connect your Discord account to view the form.",
+                lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION",
+                sTitle: "Coming Soon", sDesc: "Premium scripts will be listed here very soon."
             }
         };
 
         let currentLang = 'TR';
         let user = null;
 
+        // SORUNSUZ YÜKLEME KONTROLÜ
         document.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash;
             
@@ -248,21 +190,15 @@
                 overlay.style.display = 'none';
                 document.getElementById('main-content').style.opacity = '1';
                 document.body.style.overflow = 'auto';
-                
                 updateLanguageUI();
                 checkDiscordAuth();
-                
-                // BU 3 FONKSİYON SAYFA AÇILINCA KESİN ÇALIŞACAK (KEYLERİN GÖRÜNME GARANTİSİ)
-                renderKeys();
-                renderUserKeys();
-                updateStats();
             }, skipAnim ? 0 : 500);
         }
 
         function toggleLanguage() {
             currentLang = currentLang === 'TR' ? 'EN' : 'TR';
             localStorage.setItem('ry_lang', currentLang);
-            updateLanguageUI(); renderKeys(); renderUserKeys();
+            updateLanguageUI();
         }
 
         function updateLanguageUI() {
@@ -271,20 +207,24 @@
             document.getElementById('nav-home').innerText = t.navHome;
             document.getElementById('nav-scripts').innerText = t.navScripts;
             document.getElementById('nav-apply').innerText = t.navApply;
-            document.getElementById('nav-admin').innerText = t.navAdmin;
             if(!user) document.getElementById('login-text').innerText = t.loginTxt;
             
             document.getElementById('h-title').innerHTML = t.hTitle;
             document.getElementById('h-desc').innerText = t.hDesc;
-            document.getElementById('stat-keys-text').innerText = t.statKey;
-            document.getElementById('stat-scripts-text').innerText = t.statScript;
-            document.getElementById('stat-btn').innerText = t.statBtn;
+            document.getElementById('h-btn-1').innerText = t.hBtn1;
+            document.getElementById('h-btn-2').innerText = t.hBtn2;
             
-            document.getElementById('ad-title').innerText = t.adTitle;
-            document.getElementById('ad-gen-btn').innerText = t.adGenBtn;
-            
-            document.getElementById('p-licenses-title').innerText = t.pTitle;
-            document.getElementById('user-no-keys').innerText = t.pNoKey;
+            document.getElementById('f-header').innerText = t.fHeader;
+            document.getElementById('f-lock-title').innerText = t.fLockTitle;
+            document.getElementById('f-lock-desc').innerText = t.fLockDesc;
+            document.getElementById('l-name').innerText = t.lName;
+            document.getElementById('l-age').innerText = t.lAge;
+            document.getElementById('l-active').innerText = t.lActive;
+            document.getElementById('l-why').innerText = t.lWhy;
+            document.getElementById('submit-btn').innerText = t.submitBtn;
+
+            document.getElementById('s-title').innerText = t.sTitle;
+            document.getElementById('s-desc').innerText = t.sDesc;
         }
 
         function checkDiscordAuth() {
@@ -297,149 +237,22 @@
                     if (data.id) {
                         user = data; localStorage.setItem('ry_token', token);
                         document.getElementById('auth-box').innerHTML = `
-                            <div onclick="changePage('profile')" class="cursor-pointer flex items-center gap-2 bg-white/5 p-1.5 pr-4 rounded-lg border border-white/10 shadow hover:bg-white/10 transition">
+                            <div class="flex items-center gap-2 bg-white/5 p-1.5 pr-4 rounded-lg border border-white/10 shadow">
                                 <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-7 h-7 rounded">
                                 <span class="text-xs font-bold uppercase">${data.username}</span>
                             </div>`;
                         
-                        document.getElementById('profile-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
-                        document.getElementById('profile-name').innerText = data.username;
-                        document.getElementById('profile-id').innerText = `ID: ${data.id}`;
-
                         document.getElementById('apply-lock').classList.add('hidden');
                         document.getElementById('apply-form').classList.remove('hidden');
-                        if (user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
                         window.history.replaceState({}, document.title, window.location.pathname);
-                        
-                        // User belli olunca profil keylerini tekrar çek
-                        renderUserKeys();
                     } else {
                         localStorage.removeItem('ry_token');
                     }
-                });
+                }).catch(() => localStorage.removeItem('ry_token'));
             }
         }
 
         function loginWithDiscord() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; }
-
-        function updateStats() {
-            try {
-                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-                document.getElementById('stat-keys-count').innerText = keys.length;
-                document.getElementById('stat-scripts-count').innerText = "0";
-            } catch(e) {
-                localStorage.setItem('ry_keys', '[]'); // Hata olursa sıfırla
-            }
-        }
-
-        // ================= ADMIN PANEL: TEK TUŞLA KEY ÜRETİMİ =================
-        function generateKey() {
-            // Rastgele RYP key oluşturucu
-            const p1 = Math.random().toString(36).substr(2, 4).toUpperCase();
-            const p2 = Math.random().toString(36).substr(2, 4).toUpperCase();
-            const p3 = Math.random().toString(36).substr(2, 4).toUpperCase();
-            const newKey = `RYP-${p1}-${p2}-${p3}`;
-
-            // Standart 30 Günlük Süre
-            const expiry = "Sınırsız";
-            const mockOwnerId = user ? user.id : null; 
-
-            try {
-                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-                keys.unshift({ key: newKey, hwid: null, expiry: expiry, owner: mockOwnerId });
-                localStorage.setItem('ry_keys', JSON.stringify(keys));
-                
-                renderKeys(); 
-                renderUserKeys(); 
-                updateStats();
-            } catch(e) {
-                console.error("Key oluşturulamadı", e);
-            }
-        }
-
-        function resetHWID(index) {
-            let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            if(keys[index]) {
-                keys[index].hwid = null;
-                localStorage.setItem('ry_keys', JSON.stringify(keys));
-                renderKeys(); renderUserKeys();
-            }
-        }
-
-        function deleteKey(index) {
-            if(confirm(currentLang === 'TR' ? 'Emin misin?' : 'Are you sure?')) {
-                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-                keys.splice(index, 1);
-                localStorage.setItem('ry_keys', JSON.stringify(keys));
-                renderKeys(); renderUserKeys(); updateStats();
-            }
-        }
-
-        // KEYLERİ TABLOYA YAZDIRAN KISIM
-        function renderKeys() {
-            const tbody = document.getElementById('keys-tbody');
-            const noKeysMsg = document.getElementById('no-keys-msg');
-            
-            try {
-                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-                tbody.innerHTML = '';
-                
-                if(keys.length === 0) { 
-                    noKeysMsg.classList.remove('hidden'); 
-                } else {
-                    noKeysMsg.classList.add('hidden');
-                    keys.forEach((k, idx) => {
-                        const hwidText = k.hwid 
-                            ? `<span class="text-red-400 text-xs"><i class="fa-solid fa-lock"></i> Kilitli</span>` 
-                            : `<span class="text-green-400 text-xs"><i class="fa-solid fa-unlock"></i> Açık</span>`;
-                            
-                        tbody.innerHTML += `
-                            <tr class="hover:bg-white/5 transition">
-                                <td class="font-mono text-white font-bold">${k.key}</td>
-                                <td>${hwidText}</td>
-                                <td class="text-gray-400 font-bold">${k.expiry}</td>
-                                <td class="text-right space-x-2">
-                                    <button onclick="resetHWID(${idx})" class="text-xs bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-rotate-right"></i></button>
-                                    <button onclick="deleteKey(${idx})" class="text-xs bg-red-900/50 hover:bg-red-600 text-white px-3 py-1.5 rounded"><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>`;
-                    });
-                }
-            } catch(e) {
-                console.error("Tablo yüklenirken hata", e);
-                localStorage.setItem('ry_keys', '[]'); // Bozuk veriyi düzelt
-            }
-        }
-
-        function renderUserKeys() {
-            if(!user) return;
-            try {
-                let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-                const myKeys = keys.filter(k => k.owner === user.id);
-                
-                const tbody = document.getElementById('user-keys-tbody');
-                const noKeysMsg = document.getElementById('user-no-keys');
-                tbody.innerHTML = '';
-                
-                if(myKeys.length === 0) { 
-                    noKeysMsg.classList.remove('hidden'); 
-                } else {
-                    noKeysMsg.classList.add('hidden');
-                    myKeys.forEach((k) => {
-                        const hwidText = k.hwid 
-                            ? `<span class="text-red-400 text-xs"><i class="fa-solid fa-lock"></i> Cihaza Kayıtlı</span>` 
-                            : `<span class="text-green-400 text-xs"><i class="fa-solid fa-unlock"></i> Boşta</span>`;
-                            
-                        tbody.innerHTML += `
-                            <tr class="border-b border-white/5">
-                                <td class="font-mono text-white font-bold bg-white/5 px-2 py-1 rounded inline-block my-2">${k.key}</td>
-                                <td class="py-2">${hwidText}</td>
-                                <td class="text-gray-400 py-2">${k.expiry}</td>
-                            </tr>`;
-                    });
-                }
-            } catch(e) {}
-        }
 
         function handleApply(e) {
             e.preventDefault();
@@ -468,6 +281,9 @@
                 btn.innerText = currentLang === 'TR' ? "BAŞARIYLA GÖNDERİLDİ ✅" : "SUCCESSFULLY SENT ✅";
                 btn.style.background = "#00FF00"; btn.style.color = "#000";
                 setTimeout(() => { btn.disabled = false; btn.innerText = originalText; btn.style.background = "#fff"; e.target.reset(); }, 3000);
+            }).catch(() => {
+                btn.disabled = false; btn.innerText = currentLang === 'TR' ? "HATA OLUŞTU" : "ERROR OCCURRED";
+                setTimeout(() => { btn.innerText = originalText; }, 3000);
             });
         }
 
