@@ -12,8 +12,8 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* INTRO */
-        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        /* INTRO (Geçiş Efekti Eklendi) */
+        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
         .snake-1 { top: 20%; animation: slitherRight 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
@@ -207,7 +207,6 @@
             EN: "https://discord.com/api/webhooks/1491124036359557362/2v_uo05PuQS1dPSIvdKCRCHcRAaZPS8s8d6G0koGce9fDG4J6BDWAn20cXNnfQoWQgaA"
         };
 
-        // Bu objede dil çevirileri var. İstersen ileride düzenleyebilirsin.
         const texts = {
             TR: {
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Admin", loginTxt: "GİRİŞ YAP",
@@ -228,22 +227,28 @@
         let currentLang = 'TR';
         let user = null;
 
-        window.onload = () => {
+        // DONMA SORUNU ÇÖZÜMÜ: DOMContentLoaded KULLANILDI
+        document.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash;
+            
             if (hash.includes('access_token')) {
                 document.getElementById('pre-intro').style.display = 'none';
                 currentLang = localStorage.getItem('ry_lang') || 'TR';
                 initApp(currentLang, true);
             } else {
                 setTimeout(() => {
-                    document.getElementById('pre-intro').style.display = 'none';
-                    const overlay = document.getElementById('lang-overlay');
-                    overlay.style.display = 'flex';
-                    setTimeout(() => overlay.style.opacity = '1', 50);
-                }, 3800);
+                    const intro = document.getElementById('pre-intro');
+                    intro.style.opacity = '0';
+                    setTimeout(() => {
+                        intro.style.display = 'none';
+                        const overlay = document.getElementById('lang-overlay');
+                        overlay.style.display = 'flex';
+                        setTimeout(() => overlay.style.opacity = '1', 50);
+                    }, 500);
+                }, 3500);
             }
             updateStats();
-        };
+        });
 
         function initApp(lang, skipAnim = false) {
             currentLang = lang; localStorage.setItem('ry_lang', lang);
@@ -300,14 +305,12 @@
                 .then(res => res.json()).then(data => {
                     if (data.id) {
                         user = data; localStorage.setItem('ry_token', token);
-                        // Tıklanabilir Profil Resmi
                         document.getElementById('auth-box').innerHTML = `
                             <div onclick="changePage('profile')" class="cursor-pointer flex items-center gap-2 bg-white/5 p-1.5 pr-4 rounded-lg border border-white/10 shadow hover:bg-white/10 transition">
                                 <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-8 h-8 rounded">
                                 <span class="text-xs font-bold uppercase">${data.username}</span>
                             </div>`;
                         
-                        // Profil sayfasına bilgileri bas
                         document.getElementById('profile-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
                         document.getElementById('profile-name').innerText = data.username;
                         document.getElementById('profile-id').innerText = `ID: ${data.id}`;
@@ -326,33 +329,25 @@
 
         function loginWithDiscord() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; }
 
-        // ================= ADMIN & İSTATİSTİK FONKSİYONLARI =================
-
         function updateStats() {
             let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
             document.getElementById('stat-keys-count').innerText = keys.length;
-            document.getElementById('stat-scripts-count').innerText = "0"; // İleride script ekleyince burayı artırırız
+            document.getElementById('stat-scripts-count').innerText = "0"; 
         }
 
         function generateCustomKey() {
             let customName = document.getElementById('custom-key-name').value.trim();
             const timeVal = document.getElementById('custom-key-time').value;
-            
-            // Eğer boş bırakılırsa rastgele RYP-X keyi oluştursun
             if(!customName) customName = `RYP-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
 
             let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            
-            // Profilde görmek için kurucunun kendisine aitmiş gibi test verisi oluşturuyoruz
             const mockOwnerId = user ? user.id : null; 
 
             keys.unshift({ key: customName, hwid: null, expiry: timeVal, owner: mockOwnerId });
             localStorage.setItem('ry_keys', JSON.stringify(keys));
             
             document.getElementById('custom-key-name').value = '';
-            renderKeys();
-            renderUserKeys();
-            updateStats();
+            renderKeys(); renderUserKeys(); updateStats();
         }
 
         function resetHWID(index) {
@@ -394,11 +389,9 @@
             }
         }
 
-        // KULLANICININ KENDİ PROFİLİNDEKİ KEYLERİ
         function renderUserKeys() {
             if(!user) return;
             let keys = JSON.parse(localStorage.getItem('ry_keys')) || [];
-            // Kullanıcının kendi sahip olduğu keyleri filtrele
             const myKeys = keys.filter(k => k.owner === user.id);
             
             const tbody = document.getElementById('user-keys-tbody');
@@ -417,6 +410,36 @@
                         </tr>`;
                 });
             }
+        }
+
+        function handleApply(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
+            btn.disabled = true; btn.innerText = "...";
+
+            const payload = {
+                embeds: [{
+                    title: `📩 Yeni Başvuru / New App (${currentLang})`,
+                    color: 0xffffff,
+                    fields: [
+                        { name: "Kullanıcı", value: `<@${user.id}> (${user.username})`, inline: true },
+                        { name: "İsim", value: document.getElementById('i-name').value, inline: true },
+                        { name: "Yaş", value: document.getElementById('i-age').value, inline: true },
+                        { name: "Aktiflik", value: document.getElementById('i-active').value },
+                        { name: "Detaylar", value: document.getElementById('i-why').value }
+                    ],
+                    footer: { text: `User ID: ${user.id}` },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            fetch(WEBHOOKS[currentLang], { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(() => {
+                btn.innerText = currentLang === 'TR' ? "BAŞARIYLA GÖNDERİLDİ ✅" : "SUCCESSFULLY SENT ✅";
+                btn.style.background = "#00FF00"; btn.style.color = "#000";
+                setTimeout(() => { btn.disabled = false; btn.innerText = originalText; btn.style.background = "#fff"; e.target.reset(); }, 3000);
+            });
         }
 
         function changePage(id) {
