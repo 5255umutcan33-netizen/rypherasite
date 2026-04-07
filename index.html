@@ -3,111 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryphera OS | Management Suite</title>
+    <title>Ryphera OS | Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap');
-        body { background-color: #0d0d0d; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; } 
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .gradient-text { background: linear-gradient(90deg, #ffffff, #555555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .discord-btn { background: #5865F2; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .discord-btn:hover { background: #4752C4; transform: translateY(-2px); shadow: 0 10px 20px rgba(88, 101, 242, 0.4); }
-        
-        /* Intro & Page Transitions */
-        #pre-intro { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; animation: fadeOut 1s ease 3s forwards; }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-        #main-content { opacity: 0; transition: opacity 1s ease; }
-        .page-view { display: none; opacity: 0; transform: scale(0.98); transition: all 0.4s ease; }
-        .page-view.active { display: block; opacity: 1; transform: scale(1); }
+        body { background-color: #0f0f0f; color: #ffffff; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; padding: 0; } 
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Modern Input */
-        input, textarea, select { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #5865F2; background: rgba(255, 255, 255, 0.05); }
+        /* O SEVDİĞİN YILANLI INTRO */
+        #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; animation: preIntroFadeOut 0.8s ease-in-out 3.5s forwards; }
+        .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+        .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
+        .snake-1 { top: 20%; animation: slitherRight 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards; }
+        .snake-2 { top: 50%; right: 0; width: 200px; animation: slitherLeft 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards; }
+        .snake-3 { bottom: 20%; left: -100px; transform: rotate(-20deg); animation: slitherDiagonal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards; }
+        #pre-intro-text { font-size: 4rem; font-weight: 900; letter-spacing: 1rem; color: #ffffff; text-transform: uppercase; z-index: 2; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); animation: textReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards; transform: scale(0.8); opacity: 0; filter: blur(10px); }
+        
+        @keyframes slitherRight { 0% { transform: translateX(-200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(120vw); opacity: 0; } }
+        @keyframes slitherLeft { 0% { transform: translateX(200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(-120vw); opacity: 0; } }
+        @keyframes slitherDiagonal { 0% { transform: translate(-200px, 100px) rotate(-20deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(120vw, -300px) rotate(-20deg); opacity: 0; } }
+        @keyframes textReveal { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0px); } }
+        @keyframes preIntroFadeOut { 0% { transform: translateY(0%); opacity: 1; } 100% { transform: translateY(-100%); opacity: 0; visibility: hidden; } }
+
+        #main-content { opacity: 0; transition: opacity 1s ease-in; display: flex; flex-direction: column; min-height: 100vh; }
+        .page-view { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease-out; flex-grow: 1; }
+        .page-view.active { display: block; opacity: 1; transform: translateY(0); }
+        input, textarea, select { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 0.5rem; padding: 0.75rem 1rem; width: 100%; outline: none; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; display: block; margin-top: 5px; right: 0; background: #fff; transition: width 0.3s ease; }
+        .nav-link.active-nav::after { width: 100%; left: 0; background: #fff; }
     </style>
 </head>
 <body class="antialiased">
 
-    <div id="pre-intro"><h1 class="text-6xl font-black tracking-tighter animate-pulse">RYPHERA</h1></div>
+    <div id="pre-intro">
+        <div class="snake-container"><div class="snake snake-1"></div><div class="snake snake-2"></div><div class="snake snake-3"></div></div>
+        <div id="pre-intro-text">RYPHERA</div>
+    </div>
 
     <div id="main-content">
-        <nav class="p-6 flex items-center justify-between max-w-7xl mx-auto w-full">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="changePage('home')">
-                <img src="logo.png" id="nav-logo" class="h-10 w-10 rounded-full border border-white/10" onerror="this.src='https://via.placeholder.com/40'">
-                <span class="text-xl font-black tracking-tighter">RYPHERA<span class="text-gray-600">OS</span></span>
+        <nav class="p-6 relative flex items-center justify-between max-w-7xl mx-auto w-full">
+            <div class="flex-1 flex justify-start">
+                <div class="cursor-pointer flex items-center gap-3 transition hover:scale-105" onclick="changePage('home')">
+                    <img src="logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://via.placeholder.com/40'">
+                    <span class="text-2xl font-bold tracking-tighter">RYPHERA<span class="text-gray-600">OS</span></span>
+                </div>
             </div>
             
-            <div class="hidden md:flex gap-8 text-xs uppercase tracking-[0.2em] font-bold text-gray-500">
-                <a href="#" onclick="changePage('home')" class="hover:text-white transition">Home</a>
-                <a href="#" onclick="changePage('scripts')" class="hover:text-white transition">Scripts</a>
-                <a href="#" onclick="changePage('apply')" class="hover:text-white transition">Apply</a>
-                <a href="#" onclick="changePage('admin')" id="admin-nav" class="hidden text-red-500 hover:text-red-400 transition">Admin</a>
+            <div class="flex-1 flex justify-center space-x-8 hidden md:flex text-sm uppercase tracking-widest text-gray-400 font-medium">
+                <a href="#" onclick="changePage('home')" class="nav-link active-nav text-white transition" id="nav-home">ANA SAYFA</a>
+                <a href="#" onclick="changePage('scripts')" class="nav-link hover:text-white transition" id="nav-scripts">SCRİPTLER</a>
+                <a href="#" onclick="changePage('apply')" class="nav-link hover:text-white transition" id="nav-apply">BAŞVURU</a>
+                <a href="#" onclick="changePage('admin')" class="nav-link hover:text-white transition text-red-500 hidden" id="nav-admin">ADMİN</a>
             </div>
 
-            <div id="user-section">
-                <button onclick="loginWithDiscord()" class="discord-btn px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2">
-                    <i class="fa-brands fa-discord"></i> Login
+            <div class="flex-1 flex justify-end" id="login-section">
+                <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-all">
+                    <i class="fa-brands fa-discord"></i> GİRİŞ YAP
                 </button>
             </div>
         </nav>
 
         <div id="home-view" class="page-view active">
-            <div class="text-center py-32">
-                <h1 class="text-7xl md:text-9xl font-black gradient-text tracking-tighter mb-8">RYPHERA OS.</h1>
-                <p class="text-gray-500 text-xl max-w-xl mx-auto font-light">The next generation of scripting solutions. Secure, fast, and persistent.</p>
-            </div>
+            <header class="py-24 px-6 text-center mt-10">
+                <h1 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter gradient-text leading-none">GELECEĞİN <br> SCRİPT SİSTEMİ.</h1>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-12 font-light">Ryphera OS ile oyun deneyiminizi bir üst seviyeye taşıyın. Hızlı, güvenli ve optimize.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">ŞİMDİ KATIL</a>
+                    <a href="#" onclick="changePage('apply')" class="glass px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">YETKİLİ OL</a>
+                </div>
+            </header>
         </div>
 
         <div id="apply-view" class="page-view">
-            <div class="max-w-2xl mx-auto px-6 py-12">
-                <div class="glass p-10 rounded-[2rem]">
+            <section class="max-w-2xl mx-auto px-6 py-10">
+                <div class="glass p-8 rounded-3xl border-white/10 shadow-2xl">
                     <div id="apply-locked" class="text-center py-10">
-                        <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fa-solid fa-lock text-3xl text-gray-600"></i></div>
-                        <h2 class="text-2xl font-bold mb-2">Login Required</h2>
-                        <p class="text-gray-500 mb-8">Please login with Discord to submit an application.</p>
-                        <button onclick="loginWithDiscord()" class="discord-btn px-10 py-4 rounded-2xl font-bold">Connect Discord</button>
+                        <i class="fa-solid fa-lock text-6xl text-gray-700 mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-2">Önce Giriş Yapmalısın</h2>
+                        <p class="text-gray-500">Başvuru formunu görmek için Discord hesabını bağla.</p>
                     </div>
 
                     <form id="apply-form" class="hidden space-y-6" onsubmit="handleApply(event)">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-3xl font-black tracking-tight" id="form-title">Staff Application</h2>
-                            <select id="lang-toggle" onchange="updateLang()" class="text-xs bg-white/5 border-none p-2">
-                                <option value="TR">🇹🇷 Türkçe</option>
-                                <option value="EN" selected>🇺🇸 English</option>
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-3xl font-black tracking-tight text-white">YETKİLİ BAŞVURUSU</h2>
+                            <select id="form-lang" class="w-32 text-xs bg-white/5 border-none">
+                                <option value="TR">TÜRKÇE</option>
+                                <option value="EN">ENGLISH</option>
                             </select>
                         </div>
-                        
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="flex flex-col gap-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase" id="label-name">Full Name</label>
-                                <input type="text" id="form-name" required placeholder="...">
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase" id="label-age">Age</label>
-                                <input type="number" id="form-age" required>
-                            </div>
+                            <div><label class="text-xs font-bold text-gray-500 uppercase">İSİM SOYİSİM</label><input type="text" id="f-name" required></div>
+                            <div><label class="text-xs font-bold text-gray-500 uppercase">YAŞ</label><input type="number" id="f-age" required></div>
                         </div>
-
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase" id="label-active">Daily Activity (Hours)</label>
-                            <input type="text" id="form-active" required placeholder="e.g. 5-6 hours">
-                        </div>
-
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase" id="label-why">Why should we choose you?</label>
-                            <textarea id="form-why" rows="4" required></textarea>
-                        </div>
-
-                        <button type="submit" id="submit-btn" class="w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-gray-200 transition">Submit Application</button>
+                        <div><label class="text-xs font-bold text-gray-500 uppercase">GÜNLÜK AKTİFLİK</label><input type="text" id="f-active" required placeholder="5-6 Saat"></div>
+                        <div><label class="text-xs font-bold text-gray-500 uppercase">KOMUT BİLGİNİZ VE NEDEN BİZ?</label><textarea id="f-why" rows="4" required></textarea></div>
+                        <button type="submit" id="sub-btn" class="w-full bg-white text-black py-4 rounded-xl font-black tracking-widest hover:bg-gray-200 transition">BAŞVURUYU GÖNDER</button>
                     </form>
                 </div>
+            </section>
+        </div>
+
+        <div id="scripts-view" class="page-view text-center py-20">
+            <div class="glass max-w-xl mx-auto p-12 rounded-3xl">
+                <i class="fa-solid fa-ghost text-5xl mb-6 text-gray-700"></i>
+                <h3 class="text-2xl font-bold">Yakında Yayındayız</h3>
+                <p class="text-gray-500">Premium scriptler çok yakında burada listelenecek.</p>
             </div>
         </div>
+
     </div>
 
     <script>
         const CLIENT_ID = "1491071700715048970";
-        const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/"; 
+        const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
         const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
@@ -116,16 +127,11 @@
 
         let user = null;
 
-        const langData = {
-            TR: { title: "Yetkili Başvurusu", name: "İsim Soyisim", age: "Yaş", active: "Günlük Aktiflik", why: "Neden Biz?", btn: "BAŞVURUYU GÖNDER" },
-            EN: { title: "Staff Application", name: "Full Name", age: "Age", active: "Daily Activity", why: "Why should we choose you?", btn: "SUBMIT APPLICATION" }
-        };
-
-        // 1. GİRİŞ KONTROLÜ (Persistent Login)
+        // HATIRLAMA SİSTEMİ
         window.onload = () => {
-            const savedToken = localStorage.getItem('ryphera_token');
+            const saved = localStorage.getItem('ry_token');
             const hash = new URLSearchParams(window.location.hash.slice(1));
-            const token = hash.get('access_token') || savedToken;
+            const token = hash.get('access_token') || saved;
 
             if (token) {
                 fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
@@ -133,10 +139,12 @@
                 .then(data => {
                     if(data.id) {
                         user = data;
-                        localStorage.setItem('ryphera_token', token);
-                        updateUI();
-                    } else {
-                        localStorage.removeItem('ryphera_token');
+                        localStorage.setItem('ry_token', token);
+                        document.getElementById('login-section').innerHTML = `<div class="flex items-center gap-3 bg-white/5 p-1 pr-4 rounded-full border border-white/10"><img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" class="w-8 h-8 rounded-full"><span class="text-sm font-bold">${user.username}</span></div>`;
+                        document.getElementById('apply-locked').classList.add('hidden');
+                        document.getElementById('apply-form').classList.remove('hidden');
+                        if(user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
+                        window.history.replaceState({}, document.title, window.location.pathname);
                     }
                 });
             }
@@ -147,72 +155,38 @@
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         }
 
-        function updateUI() {
-            const userSection = document.getElementById('user-section');
-            userSection.innerHTML = `
-                <div class="flex items-center gap-3 bg-white/5 p-1 pr-4 rounded-full border border-white/10">
-                    <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" class="w-8 h-8 rounded-full">
-                    <span class="text-sm font-bold">${user.username}</span>
-                </div>
-            `;
-            document.getElementById('apply-locked').classList.add('hidden');
-            document.getElementById('apply-form').classList.remove('hidden');
-            if(user.id === SAHIP_ID) document.getElementById('admin-nav').classList.remove('hidden');
-        }
-
-        function updateLang() {
-            const l = document.getElementById('lang-toggle').value;
-            document.getElementById('form-title').innerText = langData[l].title;
-            document.getElementById('label-name').innerText = langData[l].name;
-            document.getElementById('label-age').innerText = langData[l].age;
-            document.getElementById('label-active').innerText = langData[l].active;
-            document.getElementById('label-why').innerText = langData[l].why;
-            document.getElementById('submit-btn').innerText = langData[l].btn;
-        }
-
         function handleApply(e) {
             e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerText = "...";
+            const btn = document.getElementById('sub-btn');
+            btn.disabled = true; btn.innerText = "GÖNDERİLİYOR...";
 
-            const lang = document.getElementById('lang-toggle').value;
+            const lang = document.getElementById('form-lang').value;
             const payload = {
                 embeds: [{
-                    title: `New Application - ${lang}`,
+                    title: `📩 YENİ BAŞVURU (${lang})`,
                     color: 0xffffff,
                     fields: [
-                        { name: "User", value: `<@${user.id}> (${user.username})`, inline: true },
-                        { name: "Name", value: document.getElementById('form-name').value, inline: true },
-                        { name: "Age", value: document.getElementById('form-age').value, inline: true },
-                        { name: "Activity", value: document.getElementById('form-active').value },
-                        { name: "Reason", value: document.getElementById('form-why').value }
+                        { name: "Kullanıcı", value: `<@${user.id}> (${user.username})`, inline: true },
+                        { name: "İsim", value: document.getElementById('f-name').value, inline: true },
+                        { name: "Yaş", value: document.getElementById('f-age').value, inline: true },
+                        { name: "Aktiflik", value: document.getElementById('f-active').value },
+                        { name: "Detaylar", value: document.getElementById('f-why').value }
                     ],
-                    footer: { text: `User ID: ${user.id}` }
-                }],
-                // BUTONLAR (Botun dinlemesi için)
-                components: [{
-                    type: 1,
-                    components: [
-                        { type: 2, style: 3, label: "Approve / Onayla", custom_id: `approve_${user.id}` },
-                        { type: 2, style: 4, label: "Reject / Reddet", custom_id: `reject_${user.id}` }
-                    ]
+                    footer: { text: `User ID: ${user.id}` },
+                    timestamp: new Date().toISOString()
                 }]
             };
 
-            fetch(WEBHOOKS[lang], {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                btn.innerText = "SUCCESS / BAŞARILI";
-                btn.classList.add('bg-green-500');
-            });
+            fetch(WEBHOOKS[lang], { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(() => { btn.innerText = "BAŞARIYLA GÖNDERİLDİ ✅"; btn.style.background = "green"; });
         }
 
         function changePage(id) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav', 'text-white'));
             document.getElementById(id + '-view').classList.add('active');
+            const nav = document.getElementById('nav-' + id);
+            if(nav) nav.classList.add('active-nav', 'text-white');
         }
     </script>
 </body>
