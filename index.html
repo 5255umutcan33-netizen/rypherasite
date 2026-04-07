@@ -3,182 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryphera OS | Corporate</title>
+    <title>Ryphera OS | Global Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap');
-        body { background-color: #0a0a0a; color: #ffffff; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; } 
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .gradient-text { background: linear-gradient(135deg, #fff 0%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body { background-color: #080808; color: #ffffff; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; } 
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(135deg, #fff 0%, #333 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* O SEVDİĞİN YILANLI INTRO */
-        #pre-intro { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; animation: fadeOut 0.8s ease 3.5s forwards; }
+        /* INTRO */
+        #pre-intro { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; animation: fadeOut 0.8s ease 3s forwards; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, #fff, transparent); height: 2px; width: 200px; filter: blur(2px); opacity: 0; }
-        .snake-1 { top: 20%; animation: slither 2s ease-in-out 0.2s forwards; }
-        .snake-2 { top: 50%; right: 0; animation: slitherLeft 2s ease-in-out 0.5s forwards; }
+        .snake-1 { top: 30%; animation: slither 2s ease-in-out 0.2s forwards; }
         @keyframes slither { 0% { transform: translateX(-200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(120vw); opacity: 0; } }
-        @keyframes slitherLeft { 0% { transform: translateX(200px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(-120vw); opacity: 0; } }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-        #main-content { opacity: 0; transition: opacity 1s ease; display: flex; flex-direction: column; min-height: 100vh; }
-        .page-view { display: none; opacity: 0; transform: translateY(15px); transition: 0.4s ease-out; flex-grow: 1; }
+        /* DİL SEÇİM EKRANI */
+        #lang-overlay { position: fixed; inset: 0; background: #080808; z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
+        
+        #main-content { opacity: 0; transition: opacity 1s ease; min-height: 100vh; display: flex; flex-direction: column; }
+        .page-view { display: none; opacity: 0; transform: translateY(10px); transition: 0.4s ease; flex-grow: 1; }
         .page-view.active { display: block; opacity: 1; transform: translateY(0); }
-        .nav-link { position: relative; color: #888; transition: 0.3s; }
+        
+        .nav-link { color: #666; transition: 0.3s; font-size: 11px; letter-spacing: 2px; }
         .nav-link:hover, .nav-link.active-nav { color: #fff; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0; background: #fff; transition: 0.3s; }
-        .nav-link.active-nav::after { width: 100%; }
-
-        input, textarea, select { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; border-radius: 12px; padding: 12px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #5865F2; background: rgba(255,255,255,0.06); }
+        input, textarea, select { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; border-radius: 10px; padding: 12px; outline: none; }
     </style>
 </head>
 <body class="antialiased">
 
     <div id="pre-intro">
-        <div class="snake snake-1"></div><div class="snake snake-2"></div>
-        <h1 class="text-6xl font-black tracking-tighter" style="text-shadow: 0 0 30px rgba(255,255,255,0.2)">RYPHERA</h1>
+        <div class="snake snake-1"></div>
+        <h1 class="text-5xl font-black tracking-tighter">RYPHERA</h1>
+    </div>
+
+    <div id="lang-overlay">
+        <div class="text-center">
+            <h2 class="text-3xl font-black mb-8 tracking-widest uppercase">Select Language / Dil Seçin</h2>
+            <div class="flex gap-6 justify-center">
+                <button onclick="initApp('TR')" class="glass px-10 py-5 rounded-2xl hover:bg-white/10 transition group text-xl font-bold">
+                    🇹🇷 TÜRKÇE
+                </button>
+                <button onclick="initApp('EN')" class="glass px-10 py-5 rounded-2xl hover:bg-white/10 transition group text-xl font-bold">
+                    🇺🇸 ENGLISH
+                </button>
+            </div>
+        </div>
     </div>
 
     <div id="main-content">
         <nav class="p-8 flex items-center justify-between max-w-7xl mx-auto w-full">
             <div class="flex items-center gap-3 cursor-pointer" onclick="changePage('home')">
-                <img src="logo.png" class="h-10 w-10 rounded-full border border-white/10 shadow-lg" onerror="this.src='https://via.placeholder.com/40'">
-                <span class="text-2xl font-black tracking-tighter uppercase">Ryphera<span class="text-gray-600">OS</span></span>
+                <img src="logo.png" class="h-10 w-10 rounded-full border border-white/10" onerror="this.src='https://via.placeholder.com/40'">
+                <span class="text-2xl font-black tracking-tighter">RYPHERA<span class="text-gray-600">OS</span></span>
             </div>
             
-            <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.3em] font-bold">
+            <div class="hidden md:flex gap-10 font-bold items-center uppercase">
                 <a href="#" onclick="changePage('home')" class="nav-link active-nav" id="nav-home">Home</a>
                 <a href="#" onclick="changePage('scripts')" class="nav-link" id="nav-scripts">Scripts</a>
-                <a href="#" onclick="changePage('apply-tr')" class="nav-link" id="nav-apply-tr">Başvuru (TR)</a>
-                <a href="#" onclick="changePage('apply-en')" class="nav-link" id="nav-apply-en">Apply (EN)</a>
+                <a href="#" onclick="changePage('apply')" class="nav-link" id="nav-apply">Apply</a>
+                <button onclick="toggleLang()" class="text-gray-500 hover:text-white transition text-xs border border-white/10 px-2 py-1 rounded" id="lang-toggle-btn">EN</button>
             </div>
 
             <div id="auth-box">
-                <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] px-7 py-2.5 rounded-full text-xs font-black tracking-widest transition-all">LOGIN</button>
+                <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] px-6 py-2 rounded-full text-xs font-black transition-all">CONNECT</button>
             </div>
         </nav>
 
-        <div id="home-view" class="page-view active text-center py-32">
-            <h1 class="text-7xl md:text-9xl font-black tracking-tighter gradient-text mb-6">DOMINATE.</h1>
-            <p class="text-gray-500 text-lg font-light tracking-wide">Elite scripting solutions for the next era.</p>
+        <div id="home-view" class="page-view active text-center py-24">
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter gradient-text mb-6" id="h-title">BEYOND.</h1>
+            <p class="text-gray-500 text-xl font-light" id="h-desc">Elite solutions for superior performance.</p>
         </div>
 
+        <div id="apply-view" class="page-view px-6">
+            <div class="max-w-2xl mx-auto glass p-10 rounded-[2.5rem]">
+                <h2 class="text-3xl font-black mb-8 tracking-tighter uppercase" id="a-title">Application</h2>
+                <div id="apply-lock" class="text-center py-10"><p class="text-gray-500" id="a-lock-msg">Login required.</p></div>
+                
+                <form id="apply-form" class="hidden space-y-6" onsubmit="handleApply(event)">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" id="f-name" required placeholder="Name">
+                        <input type="number" id="f-age" required placeholder="Age">
+                    </div>
+                    <input type="text" id="f-active" required placeholder="Activity">
+                    <textarea id="f-why" rows="4" required placeholder="Details"></textarea>
+                    <button type="submit" class="w-full bg-white text-black py-4 rounded-xl font-black tracking-widest hover:bg-gray-200 transition" id="f-btn">SEND</button>
+                </form>
+            </div>
+        </div>
+        
         <div id="scripts-view" class="page-view text-center py-20">
-            <div class="glass max-w-xl mx-auto p-16 rounded-[3rem]">
-                <i class="fa-solid fa-code text-4xl mb-6 text-gray-700"></i>
-                <h2 class="text-2xl font-bold mb-2">Marketplace</h2>
-                <p class="text-gray-500">Coming soon to the public.</p>
-            </div>
-        </div>
-
-        <div id="apply-tr-view" class="page-view">
-            <div class="max-w-2xl mx-auto p-10 glass rounded-[2.5rem] shadow-2xl">
-                <h2 class="text-3xl font-black mb-8 tracking-tighter uppercase text-white">Yetkili Başvuru Paneli</h2>
-                <div id="lock-tr" class="py-10 text-center"><p class="text-gray-500 mb-4">Formu görmek için giriş yapmalısın.</p></div>
-                <form id="form-tr" class="hidden space-y-6" onsubmit="sendForm(event, 'TR')">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="name-tr" placeholder="İsim Soyisim" required>
-                        <input type="number" id="age-tr" placeholder="Yaş" required>
-                    </div>
-                    <input type="text" id="active-tr" placeholder="Günlük Aktiflik (Saat)" required>
-                    <textarea id="why-tr" rows="4" placeholder="Neden seni seçmeliyiz?" required></textarea>
-                    <button type="submit" class="w-full bg-white text-black py-4 rounded-xl font-black tracking-tighter hover:bg-gray-200 transition">BAŞVURUYU GÖNDER</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="apply-en-view" class="page-view">
-            <div class="max-w-2xl mx-auto p-10 glass rounded-[2.5rem] shadow-2xl">
-                <h2 class="text-3xl font-black mb-8 tracking-tighter uppercase text-white">Staff Application</h2>
-                <div id="lock-en" class="py-10 text-center"><p class="text-gray-500 mb-4">Please login to see the form.</p></div>
-                <form id="form-en" class="hidden space-y-6" onsubmit="sendForm(event, 'EN')">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="name-en" placeholder="Full Name" required>
-                        <input type="number" id="age-en" placeholder="Age" required>
-                    </div>
-                    <input type="text" id="active-en" placeholder="Daily Activity" required>
-                    <textarea id="why-en" rows="4" placeholder="Why should we hire you?" required></textarea>
-                    <button type="submit" class="w-full bg-white text-black py-4 rounded-xl font-black tracking-tighter hover:bg-gray-200 transition">SUBMIT APPLICATION</button>
-                </form>
-            </div>
+            <h2 class="text-3xl font-bold text-gray-700" id="s-msg">Coming Soon...</h2>
         </div>
     </div>
 
     <script>
         const CLIENT_ID = "1491071700715048970";
-        const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/"; 
+        const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
+        const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
             EN: "https://discord.com/api/webhooks/1491124036359557362/2v_uo05PuQS1dPSIvdKCRCHcRAaZPS8s8d6G0koGce9fDG4J6BDWAn20cXNnfQoWQgaA"
         };
 
-        let currentUser = null;
+        const translations = {
+            TR: {
+                home: "ANA SAYFA", scripts: "SCRİPTLER", apply: "BAŞVURU", hTitle: "ÖTESİ.", hDesc: "Üstün performans için elit çözümler.",
+                aTitle: "YETKİLİ BAŞVURUSU", aLock: "Giriş yapmanız gerekiyor.", fName: "İsim Soyisim", fAge: "Yaş", fActive: "Günlük Aktiflik", fWhy: "Neden biz?", fBtn: "BAŞVURUYU GÖNDER", sMsg: "Çok Yakında..."
+            },
+            EN: {
+                home: "HOME", scripts: "SCRIPTS", apply: "APPLY", hTitle: "BEYOND.", hDesc: "Elite solutions for superior performance.",
+                aTitle: "STAFF APPLICATION", aLock: "Login required.", fName: "Full Name", fAge: "Age", fActive: "Daily Activity", fWhy: "Why us?", fBtn: "SUBMIT APPLICATION", sMsg: "Coming Soon..."
+            }
+        };
 
+        let currentLang = localStorage.getItem('ry_lang') || null;
+        let user = null;
+
+        // 1. INTRO BİTİŞ KONTROLÜ
         window.onload = () => {
+            setTimeout(() => {
+                if (currentLang) {
+                    initApp(currentLang);
+                } else {
+                    const overlay = document.getElementById('lang-overlay');
+                    overlay.style.display = 'flex';
+                    setTimeout(() => overlay.style.opacity = '1', 50);
+                }
+            }, 3800);
+        };
+
+        function initApp(lang) {
+            currentLang = lang;
+            localStorage.setItem('ry_lang', lang);
+            document.getElementById('lang-overlay').style.display = 'none';
+            document.getElementById('main-content').style.opacity = '1';
+            document.body.style.overflow = 'auto';
+            applyTranslations();
+            checkDiscord();
+        }
+
+        function toggleLang() {
+            initApp(currentLang === 'TR' ? 'EN' : 'TR');
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            document.getElementById('nav-home').innerText = t.home;
+            document.getElementById('nav-scripts').innerText = t.scripts;
+            document.getElementById('nav-apply').innerText = t.apply;
+            document.getElementById('lang-toggle-btn').innerText = currentLang;
+            document.getElementById('h-title').innerText = t.hTitle;
+            document.getElementById('h-desc').innerText = t.hDesc;
+            document.getElementById('a-title').innerText = t.aTitle;
+            document.getElementById('a-lock-msg').innerText = t.aLock;
+            document.getElementById('f-name').placeholder = t.fName;
+            document.getElementById('f-age').placeholder = t.fAge;
+            document.getElementById('f-active').placeholder = t.fActive;
+            document.getElementById('f-why').placeholder = t.fWhy;
+            document.getElementById('f-btn').innerText = t.fBtn;
+            document.getElementById('s-msg').innerText = t.sMsg;
+        }
+
+        function checkDiscord() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             const token = hash.get('access_token') || localStorage.getItem('ry_token');
-
             if (token) {
                 fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.id) {
-                        currentUser = data;
-                        localStorage.setItem('ry_token', token);
-                        document.getElementById('auth-box').innerHTML = `<div class="flex items-center gap-3 bg-white/5 p-1.5 pr-4 rounded-full border border-white/10"><img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-7 h-7 rounded-full"><span class="text-xs font-bold uppercase tracking-widest">${data.username}</span></div>`;
-                        document.querySelectorAll('[id^="lock-"]').forEach(el => el.style.display = 'none');
-                        document.querySelectorAll('[id^="form-"]').forEach(el => el.classList.remove('hidden'));
-                    } else {
-                        localStorage.removeItem('ry_token');
+                .then(res => res.json()).then(data => {
+                    if(data.id) {
+                        user = data; localStorage.setItem('ry_token', token);
+                        document.getElementById('auth-box').innerHTML = `<img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="w-8 h-8 rounded-full border border-white/10">`;
+                        document.getElementById('apply-lock').classList.add('hidden');
+                        document.getElementById('apply-form').classList.remove('hidden');
+                        window.history.replaceState({}, document.title, window.location.pathname);
                     }
-                    window.history.replaceState({}, document.title, window.location.pathname);
                 });
             }
-            setTimeout(() => { document.getElementById('main-content').style.opacity = '1'; document.body.style.overflow = 'auto'; }, 3800);
-        };
+        }
 
         function loginWithDiscord() {
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         }
 
-        function sendForm(e, lang) {
+        function handleApply(e) {
             e.preventDefault();
-            const suffix = lang.toLowerCase();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "..."; btn.disabled = true;
-
+            const btn = document.getElementById('f-btn');
+            btn.disabled = true; btn.innerText = "...";
             const payload = {
                 embeds: [{
-                    title: `New Staff Application (${lang})`,
+                    title: `📩 Application (${currentLang})`,
                     color: 0xffffff,
                     fields: [
-                        { name: "User", value: `<@${currentUser.id}> (${currentUser.username})`, inline: true },
-                        { name: "Name", value: document.getElementById(`name-${suffix}`).value, inline: true },
-                        { name: "Age", value: document.getElementById(`age-${suffix}`).value, inline: true },
-                        { name: "Activity", value: document.getElementById(`active-${suffix}`).value },
-                        { name: "Details", value: document.getElementById(`why-${suffix}`).value }
+                        { name: "User", value: `<@${user.id}>`, inline: true },
+                        { name: "Name", value: document.getElementById('f-name').value, inline: true },
+                        { name: "Age", value: document.getElementById('f-age').value, inline: true },
+                        { name: "Activity", value: document.getElementById('f-active').value },
+                        { name: "Details", value: document.getElementById('f-why').value }
                     ],
-                    footer: { text: `User ID: ${currentUser.id}` },
-                    timestamp: new Date().toISOString()
+                    footer: { text: `User ID: ${user.id}` }
                 }]
             };
-
-            fetch(WEBHOOKS[lang], {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                btn.innerText = "SUCCESS ✅"; btn.style.background = "green";
-                e.target.reset();
-            });
+            fetch(WEBHOOKS[currentLang], { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(() => { btn.innerText = "DONE ✅"; btn.style.background = "green"; });
         }
 
         function changePage(id) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.getElementById(id + '-view').classList.add('active');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
-            document.getElementById(`${id}-view`).classList.add('active');
-            document.getElementById(`nav-${id}`).classList.add('active-nav');
+            document.getElementById('nav-' + id).classList.add('active-nav');
         }
     </script>
 </body>
