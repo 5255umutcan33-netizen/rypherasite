@@ -86,12 +86,31 @@
         </nav>
 
         <div id="home-view" class="page-view active">
-            <header class="py-24 px-6 text-center">
+            <header class="py-20 px-6 text-center">
                 <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter gradient-text leading-none" id="h-title">GELECEĞİN <br> SCRIPT SİSTEMİ.</h1>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı. Ryphera OS ile fark yaratın.</p>
-                <div class="flex flex-col md:flex-row justify-center gap-6">
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
                     <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
-                    <a href="#" onclick="changePage('scripts')" class="glass px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-white/10 transition-all" id="h-btn-2">SCRİPTLERİ GÖR</a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
+                    
+                    <div class="glass p-8 rounded-[2rem] border border-white/5 relative overflow-hidden group hover:border-[#5865F2]/40 transition-all duration-500 shadow-xl">
+                        <div class="absolute -right-10 -top-10 opacity-5 group-hover:scale-110 group-hover:opacity-10 transition-all duration-500"><i class="fa-solid fa-key text-9xl"></i></div>
+                        <h3 class="text-6xl font-black text-white mb-2 tracking-tighter" id="stat-keys-count">0</h3>
+                        <p class="text-gray-400 font-bold tracking-widest uppercase text-xs" id="stat-keys-text">AKTİF LİSANS</p>
+                    </div>
+
+                    <div class="glass p-8 rounded-[2rem] border border-white/5 relative overflow-hidden group hover:border-[#5865F2]/40 transition-all duration-500 shadow-xl">
+                        <div class="absolute -right-10 -top-10 opacity-5 group-hover:scale-110 group-hover:opacity-10 transition-all duration-500"><i class="fa-solid fa-code text-9xl"></i></div>
+                        <h3 class="text-6xl font-black text-white mb-2 tracking-tighter" id="stat-scripts-count">0</h3>
+                        <p class="text-gray-400 font-bold tracking-widest uppercase text-xs mb-6" id="stat-scripts-text">TOPLAM SCRİPT</p>
+                        
+                        <button onclick="changePage('scripts')" class="bg-white/10 hover:bg-[#5865F2] text-white px-6 py-3 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-300 flex items-center gap-2 w-max" id="stat-btn">
+                            GÖRÜNTÜLE <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
                 </div>
             </header>
         </div>
@@ -142,7 +161,8 @@
             TR: {
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", loginTxt: "GİRİŞ YAP",
                 hTitle: "GELECEĞİN <br> SCRIPT SİSTEMİ.", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
-                hBtn1: "ŞİMDİ KATIL", hBtn2: "SCRİPTLERİ GÖR",
+                hBtn1: "ŞİMDİ KATIL", 
+                statKey: "AKTİF LİSANS", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
                 fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Formu doldurabilmek için Discord hesabınla bağlan.",
                 lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER",
                 sTitle: "Yakında Yayındayız", sDesc: "Premium scriptler çok yakında burada listelenecek."
@@ -150,7 +170,8 @@
             EN: {
                 navHome: "Home", navScripts: "Scripts", navApply: "Apply", loginTxt: "LOGIN",
                 hTitle: "FUTURE OF <br> SCRIPTING.", hDesc: "Fast, secure and fully optimized infrastructure.",
-                hBtn1: "JOIN NOW", hBtn2: "VIEW SCRIPTS",
+                hBtn1: "JOIN NOW", 
+                statKey: "ACTIVE LICENSES", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
                 fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "Please connect your Discord account to view the form.",
                 lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION",
                 sTitle: "Coming Soon", sDesc: "Premium scripts will be listed here very soon."
@@ -159,6 +180,7 @@
 
         let currentLang = 'TR';
         let user = null;
+        let animated = false; // Sayılar bir kere saysın diye
 
         // SORUNSUZ YÜKLEME KONTROLÜ
         document.addEventListener('DOMContentLoaded', () => {
@@ -182,6 +204,32 @@
             }
         });
 
+        // 🚀 SAYI SAYDIRMA ANİMASYONU
+        function animateNumbers() {
+            if (animated) return;
+            animated = true;
+
+            const animateValue = (id, start, end, duration) => {
+                let obj = document.getElementById(id);
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString('en-US'); // Virgüllü format (1,248)
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        obj.innerHTML = end.toLocaleString('en-US') + (id === 'stat-keys-count' ? '+' : ''); // Sonuna + koy
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // (Hedef ID, Başlangıç, Bitiş Sayısı, Animasyon Süresi ms)
+            animateValue("stat-keys-count", 0, 1842, 2000); // 1842 aktif lisans
+            animateValue("stat-scripts-count", 0, 14, 1500);  // 14 script
+        }
+
         function initApp(lang, skipAnim = false) {
             currentLang = lang; localStorage.setItem('ry_lang', lang);
             const overlay = document.getElementById('lang-overlay');
@@ -192,6 +240,9 @@
                 document.body.style.overflow = 'auto';
                 updateLanguageUI();
                 checkDiscordAuth();
+                
+                // Ana sayfa açıldığında sayıları saydır
+                animateNumbers();
             }, skipAnim ? 0 : 500);
         }
 
@@ -212,7 +263,11 @@
             document.getElementById('h-title').innerHTML = t.hTitle;
             document.getElementById('h-desc').innerText = t.hDesc;
             document.getElementById('h-btn-1').innerText = t.hBtn1;
-            document.getElementById('h-btn-2').innerText = t.hBtn2;
+            
+            document.getElementById('stat-keys-text').innerText = t.statKey;
+            document.getElementById('stat-scripts-text').innerText = t.statScript;
+            // Görüntüle butonu text güncellemesi (ikon bozulmasın diye innerHTML kullanıyoruz)
+            document.getElementById('stat-btn').innerHTML = `${t.statBtn} <i class="fa-solid fa-arrow-right"></i>`;
             
             document.getElementById('f-header').innerText = t.fHeader;
             document.getElementById('f-lock-title').innerText = t.fLockTitle;
@@ -293,6 +348,12 @@
             document.getElementById(id + '-view').classList.add('active');
             const nav = document.getElementById('nav-' + id);
             if(nav) { nav.classList.add('active-nav', 'text-white'); }
+            
+            // Eğer Ana Sayfaya dönerse sayılar tekrar saysın
+            if (id === 'home') {
+                animated = false;
+                animateNumbers();
+            }
         }
     </script>
 </body>
