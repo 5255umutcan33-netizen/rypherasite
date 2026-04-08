@@ -48,6 +48,9 @@
         /* SCRIPT KARTLARI */
         .script-card { transition: all 0.3s ease; }
         .script-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(88, 101, 242, 0.2); border-color: rgba(88, 101, 242, 0.5); }
+        
+        /* ÖZEL RYPHERA BAŞLIK EFEKTİ */
+        .ryphera-title { text-shadow: 0 0 40px rgba(255, 255, 255, 0.3); letter-spacing: 0.5rem; }
     </style>
 </head>
 <body class="antialiased">
@@ -78,7 +81,7 @@
                 <a href="#" onclick="changePage('home')" class="nav-link active-nav" id="nav-home">Ana Sayfa</a>
                 <a href="#" onclick="changePage('scripts')" class="nav-link" id="nav-scripts">Scriptler</a>
                 <a href="#" onclick="changePage('apply')" class="nav-link" id="nav-apply">Başvuru</a>
-                <a href="#" onclick="changePage('admin')" class="nav-link text-red-500 hidden" id="nav-admin">Admin</a>
+                <a href="#" onclick="changePage('admin')" class="nav-link text-red-500 hidden" id="nav-admin">Yönetim</a>
             </div>
 
             <div class="flex-1 flex justify-end items-center gap-4">
@@ -93,8 +96,8 @@
 
         <div id="home-view" class="page-view active">
             <header class="py-20 px-6 text-center">
-                <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter gradient-text leading-none" id="h-title">GELECEĞİN <br> SCRIPT SİSTEMİ.</h1>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı. Ryphera OS ile fark yaratın.</p>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-6 gradient-text leading-none ryphera-title" id="h-title">RYPHERA</h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı.</p>
                 <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
                     <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
                 </div>
@@ -103,7 +106,7 @@
                     <div class="glass p-8 rounded-[2rem] border border-white/5 relative overflow-hidden group hover:border-[#5865F2]/40 transition-all duration-500 shadow-xl">
                         <div class="absolute -right-10 -top-10 opacity-5 group-hover:scale-110 group-hover:opacity-10 transition-all duration-500"><i class="fa-solid fa-key text-9xl"></i></div>
                         <h3 class="text-6xl font-black text-white mb-2 tracking-tighter" id="stat-keys-count"><i class="fa-solid fa-spinner fa-spin text-3xl text-gray-500"></i></h3>
-                        <p class="text-gray-400 font-bold tracking-widest uppercase text-xs" id="stat-keys-text">AKTİF LİSANS (MONGODB)</p>
+                        <p class="text-gray-400 font-bold tracking-widest uppercase text-xs" id="stat-keys-text">AKTİF KEYLER</p>
                     </div>
 
                     <div class="glass p-8 rounded-[2rem] border border-white/5 relative overflow-hidden group hover:border-[#5865F2]/40 transition-all duration-500 shadow-xl">
@@ -153,8 +156,8 @@
 
         <div id="admin-view" class="page-view">
             <section class="max-w-4xl mx-auto px-6 py-8">
-                <div class="glass p-8 md:p-10 rounded-[1.5rem] border border-red-500/30 shadow-[0_0_30px_rgba(255,0,0,0.1)]">
-                    <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-shield-halved text-red-500"></i> YÖNETİM PANELİ</h2>
+                <div class="glass p-8 md:p-10 rounded-[1.5rem] border border-[#5865F2]/30 shadow-[0_0_30px_rgba(88,101,242,0.1)]">
+                    <h2 class="text-3xl font-black text-white mb-2"><i class="fa-solid fa-shield-halved text-[#5865F2]"></i> YÖNETİM PANELİ</h2>
                     <p class="text-gray-400 mb-8 text-sm">Buradan sisteme yeni script ekleyebilirsin.</p>
                     
                     <form id="add-script-form" class="space-y-6" onsubmit="addScript(event)">
@@ -184,7 +187,7 @@
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Loadstring Kodu</label>
                             <textarea id="as-code" rows="3" required placeholder="loadstring(game:HttpGet('...'))()"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-red-600 hover:bg-red-500 text-white py-4 rounded-xl font-black text-sm tracking-widest transition-all">SİSTEME EKLE</button>
+                        <button type="submit" class="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-4 rounded-xl font-black text-sm tracking-widest transition-all">SİSTEME EKLE</button>
                     </form>
                 </div>
             </section>
@@ -195,7 +198,7 @@
     <script>
         const CLIENT_ID = "1491071700715048970";
         const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
-        const BOT_API_URL = "https://turkey-bots-1.onrender.com/api/keys"; // MONGODB BAĞLANTISI İÇİN
+        const BOT_API_URL = "https://turkey-bots-1.onrender.com/api/keys"; 
         const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
@@ -205,16 +208,16 @@
         const texts = {
             TR: {
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Yönetim", loginTxt: "GİRİŞ YAP",
-                hTitle: "GELECEĞİN <br> SCRIPT SİSTEMİ.", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
-                statKey: "AKTİF LİSANS (MONGODB)", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
+                hTitle: "RYPHERA", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
+                statKey: "AKTİF KEYLER", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
                 sPageTitle: "SİSTEM SCRİPTLERİ", sPageDesc: "Desteklenen tüm platformlar için güncel kodlar.",
                 fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Formu doldurabilmek için Discord hesabınla bağlan.",
                 lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER"
             },
             EN: {
                 navHome: "Home", navScripts: "Scripts", navApply: "Apply", navAdmin: "Admin", loginTxt: "LOGIN",
-                hTitle: "FUTURE OF <br> SCRIPTING.", hDesc: "Fast, secure and fully optimized infrastructure.",
-                statKey: "ACTIVE LICENSES (MONGODB)", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
+                hTitle: "RYPHERA", hDesc: "Fast, secure and fully optimized infrastructure.",
+                statKey: "ACTIVE KEYS", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
                 sPageTitle: "SYSTEM SCRIPTS", sPageDesc: "Updated codes for all supported platforms.",
                 fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "Please connect your Discord account to view the form.",
                 lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION"
@@ -225,7 +228,6 @@
         let user = null;
         let scriptsData = JSON.parse(localStorage.getItem('ry_scripts')) || [];
 
-        // YÜKLEME KONTROLÜ (SİTEYİ DONDURMAZ)
         document.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash;
             if (hash.includes('access_token')) {
@@ -257,29 +259,26 @@
                 
                 updateLanguageUI();
                 checkDiscordAuth();
-                fetchRealDatabaseStats(); // MONGODB'DEN VERİYİ ÇEKER
-                renderScripts(); // SCRİPTLERİ EKRANA DİZER
+                fetchRealDatabaseStats(); 
+                renderScripts(); 
                 
             }, skipAnim ? 0 : 500);
         }
 
-        // 🟢 GERÇEK MONGODB'DEN AKTİF LİSANS ÇEKME (ASLA DONMA YAPMAZ)
         async function fetchRealDatabaseStats() {
             const statKeys = document.getElementById('stat-keys-count');
-            document.getElementById('stat-scripts-count').innerText = scriptsData.length; // Script sayısı
+            document.getElementById('stat-scripts-count').innerText = scriptsData.length;
 
             try {
-                // Arka planda bota sorar "Kanka kaç key var veritabanında?"
                 const response = await fetch(BOT_API_URL, { signal: AbortSignal.timeout(5000) }); 
                 if (response.ok) {
                     const keys = await response.json();
-                    statKeys.innerText = keys.length; // Gerçek sayıyı yazar
+                    statKeys.innerText = keys.length; 
                 } else {
                     statKeys.innerText = "0";
                 }
             } catch (err) {
-                // Render uyuyorsa site donmasın diye hatayı yutar
-                console.log("MongoDB Bağlantısı Bekleniyor...");
+                console.log("Bağlantı Bekleniyor...");
                 statKeys.innerText = "0"; 
             }
         }
@@ -336,10 +335,10 @@
                         document.getElementById('apply-lock').classList.add('hidden');
                         document.getElementById('apply-form').classList.remove('hidden');
                         
-                        // KURUCU İSE ADMİN PANELİNİ GÖSTER
                         if (user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
 
                         window.history.replaceState({}, document.title, window.location.pathname);
+                        renderScripts(); // Admin geldiğinde çöp kutusunu göstermek için tekrar render
                     } else {
                         localStorage.removeItem('ry_token');
                     }
@@ -349,7 +348,6 @@
 
         function loginWithDiscord() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; }
 
-        // 🛡️ ADMİN PANEL: YENİ SCRİPT EKLEME
         function addScript(e) {
             e.preventDefault();
             const newScript = {
@@ -366,11 +364,10 @@
             e.target.reset();
             alert("✅ Script Başarıyla Eklendi!");
             renderScripts();
-            fetchRealDatabaseStats(); // Script sayısını günceller
+            fetchRealDatabaseStats(); 
             changePage('scripts');
         }
 
-        // 🛡️ SCRİPTLERİ EKRANA ÇİZME (KOPYALAMALI)
         function renderScripts() {
             const container = document.getElementById('scripts-container');
             container.innerHTML = '';
@@ -385,7 +382,6 @@
             }
 
             scriptsData.forEach((s, idx) => {
-                // Platform ikonunu ayarla
                 let icon = "fa-mobile-screen";
                 if (s.platform === "Sadece PC") icon = "fa-desktop";
                 if (s.platform === "Mobil & PC") icon = "fa-gamepad";
@@ -407,7 +403,7 @@
                                     <i class="fa-regular fa-copy"></i> KOPYALA
                                 </button>
                                 ${user && user.id === SAHIP_ID ? `
-                                <button onclick="deleteScript(${idx})" class="bg-red-600 hover:bg-red-700 text-white w-12 rounded-xl flex justify-center items-center transition-all">
+                                <button onclick="deleteScript(${idx})" class="bg-red-600/80 hover:bg-red-600 text-white w-12 rounded-xl flex justify-center items-center transition-all">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>` : ''}
                             </div>
@@ -417,7 +413,6 @@
             });
         }
 
-        // 🟢 LOADSTRING KOPYALAMA SİSTEMİ
         function copyCode(btn, code) {
             navigator.clipboard.writeText(code).then(() => {
                 const originalHTML = btn.innerHTML;
@@ -442,7 +437,6 @@
             }
         }
 
-        // SAYFA GEÇİŞLERİ
         function handleApply(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
