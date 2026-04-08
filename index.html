@@ -139,7 +139,28 @@
                             EKİBİMİZE KATIL <i class="fa-solid fa-user-plus group-hover:scale-110 transition-transform"></i>
                         </button>
                     </div>
-                </div>
+                    
+                    <div class="mt-24 text-left">
+                        <div class="glass p-10 md:p-12 rounded-[2rem] border border-red-500/20 relative overflow-hidden group hover:border-red-500/50 transition-all duration-500 shadow-xl bg-gradient-to-r from-red-500/5 to-transparent">
+                            <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:scale-110 group-hover:opacity-10 transition-all duration-500">
+                                <i class="fa-brands fa-youtube text-[15rem] text-red-500"></i>
+                            </div>
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                                <div class="text-center md:text-left">
+                                    <h3 class="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter flex items-center justify-center md:justify-start gap-4" id="yt-title">
+                                        YOUTUBE KANALIMIZ <i class="fa-brands fa-youtube text-red-500 text-4xl"></i>
+                                    </h3>
+                                    <p class="text-gray-400 font-light text-lg" id="yt-desc">En yeni script tanıtımları, rehberler ve duyurular için YouTube kanalımıza göz atmayı unutmayın.</p>
+                                </div>
+                                <div>
+                                    <a href="https://www.youtube.com/@Rypherascr1pt" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black tracking-widest uppercase transition-all duration-300 shadow-[0_0_20px_rgba(255,0,0,0.3)] hover:shadow-[0_0_40px_rgba(255,0,0,0.6)] flex items-center gap-3 w-max hover:-translate-y-1" id="yt-btn">
+                                        KANALA GİT <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
             </header>
         </div>
 
@@ -237,6 +258,7 @@
                 hTitle: "RYPHERA", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
                 statKey: "AKTİF KEYLER", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
                 staffTitle: "RYPHERA TEAM", staffDesc: "Ryphera OS sistemini yöneten aktif kadro.", joinStaffBtn: "EKİBİMİZE KATIL",
+                ytTitle: "YOUTUBE KANALIMIZ", ytDesc: "En yeni script tanıtımları, rehberler ve duyurular için YouTube kanalımıza göz atmayı unutmayın.", ytBtn: "KANALA GİT",
                 sPageTitle: "SİSTEM SCRİPTLERİ", sPageDesc: "Desteklenen tüm platformlar için güncel kodlar.",
                 fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "SİSTEME GİRİŞ YAPIN", fLockDesc: "Başvuru formunu görüntülemek ve işlem yapabilmek için Discord hesabınızı bağlamanız gerekmektedir.",
                 lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER"
@@ -246,6 +268,7 @@
                 hTitle: "RYPHERA", hDesc: "Fast, secure and fully optimized infrastructure.",
                 statKey: "ACTIVE KEYS", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
                 staffTitle: "RYPHERA TEAM", staffDesc: "The active staff team behind Ryphera OS.", joinStaffBtn: "JOIN OUR TEAM",
+                ytTitle: "OUR YOUTUBE CHANNEL", ytDesc: "Check out our YouTube channel for the latest script showcases, guides, and announcements.", ytBtn: "GO TO CHANNEL",
                 sPageTitle: "SYSTEM SCRIPTS", sPageDesc: "Updated codes for all supported platforms.",
                 fHeader: "STAFF APPLICATION", fLockTitle: "LOGIN REQUIRED", fLockDesc: "Please connect your Discord account to view the form and perform actions.",
                 lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION"
@@ -367,6 +390,10 @@
             document.getElementById('staff-desc').innerText = t.staffDesc;
             document.getElementById('join-staff-btn').innerHTML = `${t.joinStaffBtn} <i class="fa-solid fa-user-plus ml-2 group-hover:scale-110 transition-transform"></i>`;
             
+            document.getElementById('yt-title').innerHTML = `${t.ytTitle} <i class="fa-brands fa-youtube text-red-500 text-4xl"></i>`;
+            document.getElementById('yt-desc').innerText = t.ytDesc;
+            document.getElementById('yt-btn').innerHTML = `${t.ytBtn} <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
+
             document.getElementById('s-page-title').innerText = t.sPageTitle;
             document.getElementById('s-page-desc').innerText = t.sPageDesc;
 
