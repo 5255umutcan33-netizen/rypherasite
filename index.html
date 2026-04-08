@@ -12,7 +12,7 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* EFSANE INTRO (BEYAZ YILANLAR) */
+        /* YILAN INTRO EFEKTİ */
         #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
@@ -26,12 +26,10 @@
         @keyframes slitherDiagonal { 0% { transform: translate(-200px, 100px) rotate(-20deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(120vw, -300px) rotate(-20deg); opacity: 0; } }
         @keyframes textReveal { 0% { transform: scale(0.8); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0px); } }
         
-        /* DİL SEÇİMİ */
         #lang-overlay { position: fixed; inset: 0; background: #0a0a0a; z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
         .lang-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 3rem; border-radius: 1rem; font-size: 1.25rem; font-weight: bold; cursor: pointer; transition: all 0.3s; color: white; display: flex; align-items: center; gap: 10px; }
         .lang-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: #5865F2; transform: translateY(-3px); }
 
-        /* İÇERİK */
         #main-content { opacity: 0; transition: opacity 0.8s ease-in; display: flex; flex-direction: column; min-height: 100vh; }
         .page-view { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s ease-out; flex-grow: 1; }
         .page-view.active { display: block; opacity: 1; transform: translateY(0); }
@@ -45,11 +43,9 @@
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background: #fff; transition: width 0.3s ease; }
         .nav-link.active-nav::after, .nav-link:hover::after { width: 100%; }
 
-        /* SCRIPT KARTLARI */
         .script-card { transition: all 0.3s ease; }
         .script-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(88, 101, 242, 0.2); border-color: rgba(88, 101, 242, 0.5); }
         
-        /* ÖZEL RYPHERA BAŞLIK EFEKTİ */
         .ryphera-title { text-shadow: 0 0 40px rgba(255, 255, 255, 0.3); letter-spacing: 0.5rem; }
     </style>
 </head>
@@ -69,7 +65,7 @@
     </div>
 
     <div id="main-content">
-        <nav class="p-6 relative flex items-center justify-between max-w-7xl mx-auto w-full">
+        <nav class="p-6 relative flex items-center justify-between max-w-7xl mx-auto w-full z-50">
             <div class="flex-1 flex justify-start">
                 <div class="cursor-pointer flex items-center gap-3 transition hover:scale-105" onclick="changePage('home')">
                     <img src="logo.png" alt="Logo" class="h-10 w-auto rounded-lg" onerror="this.src='https://via.placeholder.com/40'">
@@ -87,7 +83,7 @@
             <div class="flex-1 flex justify-end items-center gap-4">
                 <button onclick="toggleLanguage()" class="font-bold text-gray-500 hover:text-white transition px-2 py-1 border border-white/10 rounded text-sm" id="lang-toggle">EN</button>
                 <div id="auth-box">
-                    <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all text-sm shadow-[0_0_15px_rgba(88,101,242,0.3)]">
+                    <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all text-sm shadow-[0_0_15px_rgba(88,101,242,0.3)] hover:-translate-y-0.5">
                         <i class="fa-brands fa-discord text-lg"></i> <span id="login-text">GİRİŞ YAP</span>
                     </button>
                 </div>
@@ -121,39 +117,20 @@
 
                 <div class="mt-32 max-w-5xl mx-auto">
                     <div class="text-center mb-12">
-                        <h2 class="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter" id="staff-title">YETKİLİ EKİBİMİZ</h2>
-                        <p class="text-gray-400" id="staff-desc">Ryphera OS'un arkasındaki güçlü kadro.</p>
+                        <h2 class="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter" id="staff-title">RYPHERA TEAM</h2>
+                        <p class="text-gray-400" id="staff-desc">Ryphera OS sistemini yöneten aktif kadro.</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://cdn.discordapp.com/avatars/345821033414262794/a_1.png" onerror="this.src='https://via.placeholder.com/150'" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#5865F2] shadow-[0_0_15px_rgba(88,101,242,0.5)]">
-                            <h4 class="text-xl font-bold text-white">Umutcan</h4>
-                            <p class="text-xs text-[#5865F2] font-black tracking-widest mt-1">FOUNDER</p>
-                        </div>
-
-                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-                            <h4 class="text-xl font-bold text-white">Admin Adı</h4>
-                            <p class="text-xs text-red-500 font-black tracking-widest mt-1">ADMIN</p>
-                        </div>
-
-                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]">
-                            <h4 class="text-xl font-bold text-white">Mod Adı</h4>
-                            <p class="text-xs text-green-500 font-black tracking-widest mt-1">MODERATOR</p>
-                        </div>
-
-                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
-                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.5)]">
-                            <h4 class="text-xl font-bold text-white">Destek Adı</h4>
-                            <p class="text-xs text-yellow-500 font-black tracking-widest mt-1">SUPPORT</p>
+                    <div id="staff-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="col-span-full text-center py-10 text-gray-500">
+                            <i class="fa-solid fa-circle-notch fa-spin text-4xl mb-4"></i>
+                            <p class="text-sm tracking-widest uppercase">Discord'dan Veriler Çekiliyor...</p>
                         </div>
                     </div>
 
                     <div class="mt-12 text-center">
-                        <button onclick="changePage('apply')" class="bg-white/5 hover:bg-[#5865F2] text-white px-8 py-4 rounded-2xl font-black tracking-widest uppercase transition-all duration-300 border border-white/10 hover:border-[#5865F2] shadow-lg flex items-center gap-3 mx-auto" id="join-staff-btn">
-                            EKİBİMİZE KATIL <i class="fa-solid fa-user-plus"></i>
+                        <button onclick="changePage('apply')" class="bg-white/5 hover:bg-[#5865F2] text-white px-8 py-4 rounded-2xl font-black tracking-widest uppercase transition-all duration-300 border border-white/10 hover:border-[#5865F2] shadow-lg flex items-center gap-3 mx-auto group" id="join-staff-btn">
+                            EKİBİMİZE KATIL <i class="fa-solid fa-user-plus group-hover:scale-110 transition-transform"></i>
                         </button>
                     </div>
                 </div>
@@ -173,22 +150,36 @@
 
         <div id="apply-view" class="page-view">
             <section class="max-w-3xl mx-auto px-6 py-8">
-                <div class="glass p-8 md:p-10 rounded-[1.5rem] border-white/10 shadow-2xl">
-                    <h2 class="text-3xl font-black mb-8 tracking-tighter text-white" id="f-header">YETKİLİ BAŞVURUSU</h2>
-                    <div id="apply-lock" class="text-center py-12">
-                        <i class="fa-solid fa-lock text-5xl text-gray-700 mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2 text-white" id="f-lock-title">Önce Giriş Yapmalısın</h3>
-                        <p class="text-gray-500 text-sm" id="f-lock-desc">Formu doldurabilmek için Discord hesabınla bağlan.</p>
-                    </div>
-                    <form id="apply-form" class="hidden space-y-6" onsubmit="handleApply(event)">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-name">İSİM SOYİSİM</label><input type="text" id="i-name" required placeholder="..."></div>
-                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-age">YAŞ</label><input type="number" id="i-age" required placeholder="..."></div>
+                <div class="glass p-8 md:p-10 rounded-[1.5rem] border-white/10 shadow-2xl relative">
+                    
+                    <div id="apply-lock" class="text-center py-16 relative overflow-hidden rounded-2xl border border-[#5865F2]/20 bg-[#0a0a0a]/80 backdrop-blur-md">
+                        <div class="absolute inset-0 bg-gradient-to-b from-[#5865F2]/10 to-transparent"></div>
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-[#5865F2] blur-[80px] opacity-40"></div>
+                        
+                        <div class="relative z-10">
+                            <i class="fa-brands fa-discord text-6xl text-[#5865F2] mb-6 drop-shadow-[0_0_15px_rgba(88,101,242,0.5)] animate-bounce"></i>
+                            <h3 class="text-3xl font-black mb-3 text-white tracking-tighter" id="f-lock-title">SİSTEME GİRİŞ YAPIN</h3>
+                            <p class="text-gray-400 text-sm mb-10 max-w-sm mx-auto" id="f-lock-desc">Başvuru formunu görüntülemek ve işlem yapabilmek için Discord hesabınızı bağlamanız gerekmektedir.</p>
+                            
+                            <button onclick="loginWithDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-10 py-4 rounded-2xl font-black tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(88,101,242,0.4)] hover:shadow-[0_0_50px_rgba(88,101,242,0.7)] hover:-translate-y-1 flex items-center gap-3 mx-auto">
+                                DISCORD İLE BAĞLAN <i class="fa-solid fa-arrow-right"></i>
+                            </button>
                         </div>
-                        <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-active">AKTİFLİK</label><input type="text" id="i-active" required placeholder="..."></div>
-                        <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-why">NEDEN BİZ?</label><textarea id="i-why" rows="4" required placeholder="..."></textarea></div>
-                        <button type="submit" id="submit-btn" class="w-full bg-white text-black py-3.5 rounded-xl font-black text-sm tracking-widest hover:bg-gray-300 transition-all mt-2">BAŞVURUYU GÖNDER</button>
-                    </form>
+                    </div>
+
+                    <div id="form-container" class="hidden">
+                        <h2 class="text-3xl font-black mb-8 tracking-tighter text-white" id="f-header">YETKİLİ BAŞVURUSU</h2>
+                        <form id="apply-form" class="space-y-6" onsubmit="handleApply(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-name">İSİM SOYİSİM</label><input type="text" id="i-name" required placeholder="..."></div>
+                                <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-age">YAŞ</label><input type="number" id="i-age" required placeholder="..."></div>
+                            </div>
+                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-active">AKTİFLİK</label><input type="text" id="i-active" required placeholder="..."></div>
+                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider" id="l-why">NEDEN BİZ?</label><textarea id="i-why" rows="4" required placeholder="..."></textarea></div>
+                            <button type="submit" id="submit-btn" class="w-full bg-white text-black py-4 rounded-xl font-black text-sm tracking-widest hover:bg-gray-300 transition-all mt-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]">BAŞVURUYU GÖNDER</button>
+                        </form>
+                    </div>
+
                 </div>
             </section>
         </div>
@@ -201,19 +192,10 @@
                     
                     <form id="add-script-form" class="space-y-6" onsubmit="addScript(event)">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Script Adı</label>
-                                <input type="text" id="as-name" required placeholder="Örn: Ryphera Premium V2">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Resim URL</label>
-                                <input type="url" id="as-img" required placeholder="https://i.imgur.com/...png">
-                            </div>
+                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Script Adı</label><input type="text" id="as-name" required placeholder="Örn: Ryphera Premium V2"></div>
+                            <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Resim URL</label><input type="url" id="as-img" required placeholder="https://i.imgur.com/...png"></div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Kısa Açıklama</label>
-                            <input type="text" id="as-desc" required placeholder="Dünyanın en iyi scripti vs.">
-                        </div>
+                        <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Kısa Açıklama</label><input type="text" id="as-desc" required placeholder="Dünyanın en iyi scripti vs."></div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Desteklenen Platform</label>
                             <select id="as-platform" required>
@@ -222,10 +204,7 @@
                                 <option value="Sadece Mobil">Sadece Mobil</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Loadstring Kodu</label>
-                            <textarea id="as-code" rows="3" required placeholder="loadstring(game:HttpGet('...'))()"></textarea>
-                        </div>
+                        <div><label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Loadstring Kodu</label><textarea id="as-code" rows="3" required placeholder="loadstring(game:HttpGet('...'))()"></textarea></div>
                         <button type="submit" class="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-4 rounded-xl font-black text-sm tracking-widest transition-all">SİSTEME EKLE</button>
                     </form>
                 </div>
@@ -237,7 +216,7 @@
     <script>
         const CLIENT_ID = "1491071700715048970";
         const REDIRECT_URI = "https://rypherasite-ludd.vercel.app/";
-        const BOT_API_URL = "https://turkey-bots-1.onrender.com/api/keys"; 
+        const BOT_API_URL = "https://turkey-bots-1.onrender.com/api"; // Kök URL
         const SAHIP_ID = "345821033414262794";
         const WEBHOOKS = {
             TR: "https://discord.com/api/webhooks/1491124164042424332/vRWiYUmtb3pF34escp5ygnMnyfrH3bgyCZaKHfmgTDXQE2dxUi7cL-3t0tLN3c_9wDaT",
@@ -249,18 +228,18 @@
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Yönetim", loginTxt: "GİRİŞ YAP",
                 hTitle: "RYPHERA", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
                 statKey: "AKTİF KEYLER", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
-                staffTitle: "YETKİLİ EKİBİMİZ", staffDesc: "Ryphera OS'un arkasındaki güçlü kadro.", joinStaffBtn: "EKİBİMİZE KATIL",
+                staffTitle: "RYPHERA TEAM", staffDesc: "Ryphera OS sistemini yöneten aktif kadro.", joinStaffBtn: "EKİBİMİZE KATIL",
                 sPageTitle: "SİSTEM SCRİPTLERİ", sPageDesc: "Desteklenen tüm platformlar için güncel kodlar.",
-                fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Formu doldurabilmek için Discord hesabınla bağlan.",
+                fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "SİSTEME GİRİŞ YAPIN", fLockDesc: "Başvuru formunu görüntülemek ve işlem yapabilmek için Discord hesabınızı bağlamanız gerekmektedir.",
                 lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER"
             },
             EN: {
                 navHome: "Home", navScripts: "Scripts", navApply: "Apply", navAdmin: "Admin", loginTxt: "LOGIN",
                 hTitle: "RYPHERA", hDesc: "Fast, secure and fully optimized infrastructure.",
                 statKey: "ACTIVE KEYS", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
-                staffTitle: "OUR STAFF TEAM", staffDesc: "The strong team behind Ryphera OS.", joinStaffBtn: "JOIN OUR TEAM",
+                staffTitle: "RYPHERA TEAM", staffDesc: "The active staff team behind Ryphera OS.", joinStaffBtn: "JOIN OUR TEAM",
                 sPageTitle: "SYSTEM SCRIPTS", sPageDesc: "Updated codes for all supported platforms.",
-                fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "Please connect your Discord account to view the form.",
+                fHeader: "STAFF APPLICATION", fLockTitle: "LOGIN REQUIRED", fLockDesc: "Please connect your Discord account to view the form and perform actions.",
                 lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION"
             }
         };
@@ -301,6 +280,7 @@
                 updateLanguageUI();
                 checkDiscordAuth();
                 fetchRealDatabaseStats(); 
+                fetchDiscordStaff(); // CANLI YETKİLİLERİ ÇEK
                 renderScripts(); 
                 
             }, skipAnim ? 0 : 500);
@@ -309,18 +289,48 @@
         async function fetchRealDatabaseStats() {
             const statKeys = document.getElementById('stat-keys-count');
             document.getElementById('stat-scripts-count').innerText = scriptsData.length;
-
             try {
-                const response = await fetch(BOT_API_URL, { signal: AbortSignal.timeout(5000) }); 
+                const response = await fetch(`${BOT_API_URL}/keys`, { signal: AbortSignal.timeout(5000) }); 
                 if (response.ok) {
                     const keys = await response.json();
                     statKeys.innerText = keys.length; 
-                } else {
-                    statKeys.innerText = "0";
+                } else statKeys.innerText = "0";
+            } catch (err) { statKeys.innerText = "0"; }
+        }
+
+        // 🚀 DİSCORD'DAN CANLI YETKİLİLERİ ÇEKEN FONKSİYON
+        async function fetchDiscordStaff() {
+            const container = document.getElementById('staff-container');
+            try {
+                const res = await fetch(`${BOT_API_URL}/staff`, { signal: AbortSignal.timeout(6000) });
+                if (res.ok) {
+                    const staff = await res.json();
+                    if(staff.length === 0) throw new Error("Boş Liste");
+                    
+                    container.innerHTML = '';
+                    staff.forEach(s => {
+                        // Role göre renk ayarlaması
+                        let roleColor = "text-[#5865F2]";
+                        let borderColor = "border-[#5865F2]";
+                        if(s.role.toLowerCase().includes('kurucu') || s.role.toLowerCase().includes('owner')) { roleColor = "text-red-500"; borderColor = "border-red-500"; }
+                        if(s.role.toLowerCase().includes('admin')) { roleColor = "text-yellow-500"; borderColor = "border-yellow-500"; }
+                        if(s.role.toLowerCase().includes('mod')) { roleColor = "text-green-500"; borderColor = "border-green-500"; }
+
+                        container.innerHTML += `
+                            <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
+                                <img src="${s.avatar}" onerror="this.src='https://via.placeholder.com/150'" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 ${borderColor} shadow-lg object-cover">
+                                <h4 class="text-xl font-bold text-white">${s.username}</h4>
+                                <p class="text-[11px] ${roleColor} font-black tracking-widest mt-1 uppercase">${s.role}</p>
+                            </div>
+                        `;
+                    });
                 }
-            } catch (err) {
-                console.log("Bağlantı Bekleniyor...");
-                statKeys.innerText = "0"; 
+            } catch(e) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-6 text-gray-500 border border-dashed border-gray-700 rounded-2xl">
+                        <p>Yetkili listesi şu an güncelleniyor...</p>
+                    </div>
+                `;
             }
         }
 
@@ -347,7 +357,7 @@
             
             document.getElementById('staff-title').innerText = t.staffTitle;
             document.getElementById('staff-desc').innerText = t.staffDesc;
-            document.getElementById('join-staff-btn').innerHTML = `${t.joinStaffBtn} <i class="fa-solid fa-user-plus ml-2"></i>`;
+            document.getElementById('join-staff-btn').innerHTML = `${t.joinStaffBtn} <i class="fa-solid fa-user-plus ml-2 group-hover:scale-110 transition-transform"></i>`;
             
             document.getElementById('s-page-title').innerText = t.sPageTitle;
             document.getElementById('s-page-desc').innerText = t.sPageDesc;
@@ -378,7 +388,7 @@
                             </div>`;
                         
                         document.getElementById('apply-lock').classList.add('hidden');
-                        document.getElementById('apply-form').classList.remove('hidden');
+                        document.getElementById('form-container').classList.remove('hidden');
                         
                         if (user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
 
