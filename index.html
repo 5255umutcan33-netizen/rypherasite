@@ -12,7 +12,7 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #ffffff, #666666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* INTRO */
+        /* EFSANE INTRO (BEYAZ YILANLAR) */
         #pre-intro { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .snake-container { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
         .snake { position: absolute; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); height: 2px; width: 150px; border-radius: 50%; filter: blur(2px); opacity: 0; }
@@ -99,7 +99,7 @@
                 <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-6 gradient-text leading-none ryphera-title" id="h-title">RYPHERA</h1>
                 <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light" id="h-desc">Hızlı, güvenli ve tamamen optimize edilmiş altyapı.</p>
                 <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
-                    <a href="https://discord.gg/DAVET-LINKI" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
+                    <a href="https://discord.gg/gDdxEVCY" target="_blank" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]" id="h-btn-1">ŞİMDİ KATIL</a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto text-left">
@@ -115,6 +115,45 @@
                         <p class="text-gray-400 font-bold tracking-widest uppercase text-xs mb-6" id="stat-scripts-text">TOPLAM SCRİPT</p>
                         <button onclick="changePage('scripts')" class="bg-white/10 hover:bg-[#5865F2] text-white px-6 py-3 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-300 flex items-center gap-2 w-max" id="stat-btn">
                             GÖRÜNTÜLE <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-32 max-w-5xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl md:text-5xl font-black text-white mb-3 tracking-tighter" id="staff-title">YETKİLİ EKİBİMİZ</h2>
+                        <p class="text-gray-400" id="staff-desc">Ryphera OS'un arkasındaki güçlü kadro.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://cdn.discordapp.com/avatars/345821033414262794/a_1.png" onerror="this.src='https://via.placeholder.com/150'" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#5865F2] shadow-[0_0_15px_rgba(88,101,242,0.5)]">
+                            <h4 class="text-xl font-bold text-white">Umutcan</h4>
+                            <p class="text-xs text-[#5865F2] font-black tracking-widest mt-1">FOUNDER</p>
+                        </div>
+
+                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                            <h4 class="text-xl font-bold text-white">Admin Adı</h4>
+                            <p class="text-xs text-red-500 font-black tracking-widest mt-1">ADMIN</p>
+                        </div>
+
+                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]">
+                            <h4 class="text-xl font-bold text-white">Mod Adı</h4>
+                            <p class="text-xs text-green-500 font-black tracking-widest mt-1">MODERATOR</p>
+                        </div>
+
+                        <div class="glass p-6 rounded-3xl border border-white/5 text-center hover:-translate-y-2 transition-transform duration-300">
+                            <img src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+                            <h4 class="text-xl font-bold text-white">Destek Adı</h4>
+                            <p class="text-xs text-yellow-500 font-black tracking-widest mt-1">SUPPORT</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <button onclick="changePage('apply')" class="bg-white/5 hover:bg-[#5865F2] text-white px-8 py-4 rounded-2xl font-black tracking-widest uppercase transition-all duration-300 border border-white/10 hover:border-[#5865F2] shadow-lg flex items-center gap-3 mx-auto" id="join-staff-btn">
+                            EKİBİMİZE KATIL <i class="fa-solid fa-user-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -210,6 +249,7 @@
                 navHome: "Ana Sayfa", navScripts: "Scriptler", navApply: "Başvuru", navAdmin: "Yönetim", loginTxt: "GİRİŞ YAP",
                 hTitle: "RYPHERA", hDesc: "Hızlı, güvenli ve tamamen optimize edilmiş altyapı.",
                 statKey: "AKTİF KEYLER", statScript: "TOPLAM SCRİPT", statBtn: "GÖRÜNTÜLE",
+                staffTitle: "YETKİLİ EKİBİMİZ", staffDesc: "Ryphera OS'un arkasındaki güçlü kadro.", joinStaffBtn: "EKİBİMİZE KATIL",
                 sPageTitle: "SİSTEM SCRİPTLERİ", sPageDesc: "Desteklenen tüm platformlar için güncel kodlar.",
                 fHeader: "YETKİLİ BAŞVURUSU", fLockTitle: "Önce Giriş Yapmalısın", fLockDesc: "Formu doldurabilmek için Discord hesabınla bağlan.",
                 lName: "İSİM SOYİSİM", lAge: "YAŞ", lActive: "GÜNLÜK AKTİFLİK", lWhy: "NEDEN BİZ?", submitBtn: "BAŞVURUYU GÖNDER"
@@ -218,6 +258,7 @@
                 navHome: "Home", navScripts: "Scripts", navApply: "Apply", navAdmin: "Admin", loginTxt: "LOGIN",
                 hTitle: "RYPHERA", hDesc: "Fast, secure and fully optimized infrastructure.",
                 statKey: "ACTIVE KEYS", statScript: "TOTAL SCRIPTS", statBtn: "VIEW SCRIPTS",
+                staffTitle: "OUR STAFF TEAM", staffDesc: "The strong team behind Ryphera OS.", joinStaffBtn: "JOIN OUR TEAM",
                 sPageTitle: "SYSTEM SCRIPTS", sPageDesc: "Updated codes for all supported platforms.",
                 fHeader: "STAFF APPLICATION", fLockTitle: "Login Required", fLockDesc: "Please connect your Discord account to view the form.",
                 lName: "FULL NAME", lAge: "AGE", lActive: "DAILY ACTIVITY", lWhy: "WHY US?", submitBtn: "SUBMIT APPLICATION"
@@ -304,6 +345,10 @@
             document.getElementById('stat-scripts-text').innerText = t.statScript;
             document.getElementById('stat-btn').innerHTML = `${t.statBtn} <i class="fa-solid fa-arrow-right"></i>`;
             
+            document.getElementById('staff-title').innerText = t.staffTitle;
+            document.getElementById('staff-desc').innerText = t.staffDesc;
+            document.getElementById('join-staff-btn').innerHTML = `${t.joinStaffBtn} <i class="fa-solid fa-user-plus ml-2"></i>`;
+            
             document.getElementById('s-page-title').innerText = t.sPageTitle;
             document.getElementById('s-page-desc').innerText = t.sPageDesc;
 
@@ -338,7 +383,7 @@
                         if (user.id === SAHIP_ID) document.getElementById('nav-admin').classList.remove('hidden');
 
                         window.history.replaceState({}, document.title, window.location.pathname);
-                        renderScripts(); // Admin geldiğinde çöp kutusunu göstermek için tekrar render
+                        renderScripts(); 
                     } else {
                         localStorage.removeItem('ry_token');
                     }
